@@ -1,0 +1,710 @@
+date,iso3,event_type,description
+2020-01-20,CHN,first_case,China 首例（實際可能更早）
+2020-01-20,JPN,first_case,Japan 首例（實際可能更早）
+2020-01-20,KOR,first_case,"Korea, South 首例（實際可能更早）"
+2020-01-20,THA,first_case,Thailand 首例（實際可能更早）
+2020-01-22,USA,continent_jump,病毒首次到達北美洲：US
+2020-01-22,CHN-HUB,first_case,China-Hubei 首例（實際可能更早）
+2020-01-22,TWN,first_case,Taiwan* 首例（實際可能更早）
+2020-01-22,USA,first_case,US 首例（實際可能更早）
+2020-01-23,CAN,first_case,Canada 首例
+2020-01-23,SGP,first_case,Singapore 首例
+2020-01-23,VNM,first_case,Vietnam 首例
+2020-01-23,CHN-HUB,policy,武漢封城（湖北省停止對外交通）
+2020-01-23,SGP,policy,開始禁止部分國家旅客入境
+2020-01-23,TWN,policy,開始禁止部分國家旅客入境
+2020-01-24,FRA,continent_jump,病毒首次到達歐洲：France
+2020-01-24,FRA,first_case,France 首例
+2020-01-25,AUS,continent_jump,病毒首次到達大洋洲：Australia
+2020-01-25,AUS,first_case,Australia 首例
+2020-01-25,MYS,first_case,Malaysia 首例
+2020-01-25,NPL,first_case,Nepal 首例
+2020-01-27,DEU,first_case,Germany 首例
+2020-01-27,KHM,first_case,Cambodia 首例
+2020-01-27,LKA,first_case,Sri Lanka 首例
+2020-01-27,HKG,policy,開始禁止部分國家旅客入境
+2020-01-27,MNG,policy,開始禁止部分國家旅客入境
+2020-01-28,GEO,policy,開始禁止部分國家旅客入境
+2020-01-29,ARE,first_case,United Arab Emirates 首例
+2020-01-29,FIN,first_case,Finland 首例
+2020-01-29,KAZ,policy,開始禁止部分國家旅客入境
+2020-01-29,PNG,policy,開始禁止部分國家旅客入境
+2020-01-30,IND,first_case,India 首例
+2020-01-30,PHL,first_case,Philippines 首例
+2020-01-30,BHS,policy,開始禁止部分國家旅客入境
+2020-01-30,BRN,policy,開始禁止部分國家旅客入境
+2020-01-30,CZE,policy,開始禁止部分國家旅客入境
+2020-01-30,ITA,policy,開始禁止部分國家旅客入境
+2020-01-30,MYS,policy,開始禁止部分國家旅客入境
+2020-01-30,RUS,policy,開始禁止部分國家旅客入境
+2020-01-30,TTO,policy,開始禁止部分國家旅客入境
+2020-01-30,WORLD,policy,WHO 宣布國際關注公共衛生緊急事件（PHEIC）
+2020-01-31,GBR,first_case,United Kingdom 首例
+2020-01-31,ITA,first_case,Italy 首例
+2020-01-31,RUS,first_case,Russia 首例
+2020-01-31,JAM,policy,開始禁止部分國家旅客入境
+2020-01-31,PAK,policy,開始禁止部分國家旅客入境
+2020-01-31,PHL,policy,開始禁止部分國家旅客入境
+2020-01-31,SLV,policy,開始禁止部分國家旅客入境
+2020-02-01,ESP,first_case,Spain 首例
+2020-02-01,SWE,first_case,Sweden 首例
+2020-02-01,AUS,policy,開始禁止部分國家旅客入境
+2020-02-01,CHN,policy,首次實施居家令
+2020-02-01,JPN,policy,開始禁止部分國家旅客入境
+2020-02-01,KIR,policy,開始禁止部分國家旅客入境
+2020-02-01,TKM,policy,開始禁止部分國家旅客入境
+2020-02-01,VNM,policy,開始禁止部分國家旅客入境
+2020-02-02,ISR,policy,開始禁止部分國家旅客入境
+2020-02-02,NZL,policy,開始禁止部分國家旅客入境
+2020-02-03,FJI,policy,開始禁止部分國家旅客入境
+2020-02-03,OMN,policy,開始禁止部分國家旅客入境
+2020-02-03,QAT,policy,開始禁止部分國家旅客入境
+2020-02-04,BEL,first_case,Belgium 首例
+2020-02-04,KOR,policy,開始禁止部分國家旅客入境
+2020-02-05,IDN,policy,開始禁止部分國家旅客入境
+2020-02-05,TUR,policy,開始禁止部分國家旅客入境
+2020-02-06,FIN,policy,開始禁止部分國家旅客入境
+2020-02-06,SLB,policy,開始禁止部分國家旅客入境
+2020-02-07,BMU,policy,開始禁止部分國家旅客入境
+2020-02-07,GAB,policy,開始禁止部分國家旅客入境
+2020-02-11,USA,policy,開始禁止部分國家旅客入境
+2020-02-12,BHR,policy,開始禁止部分國家旅客入境
+2020-02-14,EGY,continent_jump,病毒首次到達非洲：Egypt
+2020-02-14,EGY,first_case,Egypt 首例
+2020-02-19,IRN,first_case,Iran 首例
+2020-02-20,IRQ,policy,開始禁止部分國家旅客入境
+2020-02-21,ISR,first_case,Israel 首例
+2020-02-21,LBN,first_case,Lebanon 首例
+2020-02-23,AFG,policy,開始禁止部分國家旅客入境
+2020-02-23,ITA,policy,首次實施居家令
+2020-02-24,AFG,first_case,Afghanistan 首例
+2020-02-24,BHR,first_case,Bahrain 首例
+2020-02-24,IRQ,first_case,Iraq 首例
+2020-02-24,KWT,first_case,Kuwait 首例
+2020-02-24,OMN,first_case,Oman 首例
+2020-02-24,ARE,policy,開始禁止部分國家旅客入境
+2020-02-25,AUT,first_case,Austria 首例
+2020-02-25,CHE,first_case,Switzerland 首例
+2020-02-25,DZA,first_case,Algeria 首例
+2020-02-25,HRV,first_case,Croatia 首例
+2020-02-25,PAK,first_case,Pakistan 首例
+2020-02-26,BRA,continent_jump,病毒首次到達南美洲：Brazil
+2020-02-26,BRA,first_case,Brazil 首例
+2020-02-26,GEO,first_case,Georgia 首例
+2020-02-26,GRC,first_case,Greece 首例
+2020-02-26,MKD,first_case,North Macedonia 首例
+2020-02-26,NOR,first_case,Norway 首例
+2020-02-26,ROU,first_case,Romania 首例
+2020-02-27,BLR,first_case,Belarus 首例
+2020-02-27,DNK,first_case,Denmark 首例
+2020-02-27,EST,first_case,Estonia 首例
+2020-02-27,LTU,first_case,Lithuania 首例
+2020-02-27,NGA,first_case,Nigeria 首例
+2020-02-27,NLD,first_case,Netherlands 首例
+2020-02-27,NZL,first_case,New Zealand 首例
+2020-02-27,ARE,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,AUS,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,DEU,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,ESP,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,FRA,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,GBR,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,HRV,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,IRN,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,ITA,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,JPN,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,KOR,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,MYS,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,SGP,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,THA,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,USA,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,VNM,local_transmission_start,WHO 分類轉為本土傳播（WHO 自此日起才標註分類，實際可能更早）
+2020-02-27,CPV,policy,開始禁止部分國家旅客入境
+2020-02-28,ISL,first_case,Iceland 首例
+2020-02-28,MEX,first_case,Mexico 首例
+2020-02-28,LBN,policy,開始禁止部分國家旅客入境
+2020-02-29,IRL,first_case,Ireland 首例
+2020-02-29,LUX,first_case,Luxembourg 首例
+2020-02-29,MCO,first_case,Monaco 首例
+2020-02-29,QAT,first_case,Qatar 首例
+2020-02-29,SMR,first_case,San Marino 首例
+2020-02-29,DIAMOND_PRINCESS,local_transmission_start,WHO 分類轉為本土傳播
+2020-02-29,SMR,local_transmission_start,WHO 分類轉為本土傳播
+2020-02-29,AZE,policy,開始禁止部分國家旅客入境
+2020-03-01,ARM,first_case,Armenia 首例
+2020-03-01,AZE,first_case,Azerbaijan 首例
+2020-03-01,CZE,first_case,Czechia 首例
+2020-03-01,DOM,first_case,Dominican Republic 首例
+2020-03-01,ECU,first_case,Ecuador 首例
+2020-03-01,CAN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-01,NLD,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-01,NOR,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-01,AGO,policy,開始禁止部分國家旅客入境
+2020-03-01,SMR,policy,開始禁止部分國家旅客入境
+2020-03-02,AND,first_case,Andorra 首例
+2020-03-02,IDN,first_case,Indonesia 首例
+2020-03-02,LVA,first_case,Latvia 首例
+2020-03-02,MAR,first_case,Morocco 首例
+2020-03-02,PRT,first_case,Portugal 首例
+2020-03-02,SAU,first_case,Saudi Arabia 首例
+2020-03-02,SEN,first_case,Senegal 首例
+2020-03-02,CHE,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-02,DNK,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-02,FIN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-02,GRC,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-02,IDN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-02,ISR,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-02,SWE,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-02,SWE,policy,開始禁止部分國家旅客入境
+2020-03-03,ARG,first_case,Argentina 首例
+2020-03-03,JOR,first_case,Jordan 首例
+2020-03-03,TUN,first_case,Tunisia 首例
+2020-03-03,UKR,first_case,Ukraine 首例
+2020-03-03,DZA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-03,ECU,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-03,LBN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-03,TJK,policy,開始禁止部分國家旅客入境
+2020-03-04,CHL,first_case,Chile 首例
+2020-03-04,HUN,first_case,Hungary 首例
+2020-03-04,LIE,first_case,Liechtenstein 首例
+2020-03-04,POL,first_case,Poland 首例
+2020-03-04,ROU,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-05,BIH,first_case,Bosnia and Herzegovina 首例
+2020-03-05,PSE,first_case,West Bank and Gaza 首例
+2020-03-05,SVN,first_case,Slovenia 首例
+2020-03-05,ZAF,first_case,South Africa 首例
+2020-03-05,BEL,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-05,BLR,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-05,IND,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-05,PRT,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-05,PSE,policy,開始禁止部分國家旅客入境
+2020-03-06,BTN,first_case,Bhutan 首例
+2020-03-06,CMR,first_case,Cameroon 首例
+2020-03-06,COL,first_case,Colombia 首例
+2020-03-06,CRI,first_case,Costa Rica 首例
+2020-03-06,PER,first_case,Peru 首例
+2020-03-06,SRB,first_case,Serbia 首例
+2020-03-06,SVK,first_case,Slovakia 首例
+2020-03-06,TGO,first_case,Togo 首例
+2020-03-06,VAT,first_case,Holy See 首例
+2020-03-06,CZE,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-06,IRL,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-06,NZL,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-06,PHL,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-06,SVN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-07,MLT,first_case,Malta 首例
+2020-03-07,BRA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-07,CMR,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-07,ISL,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-07,SVK,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-07,KWT,policy,開始禁止部分國家旅客入境
+2020-03-08,BGD,first_case,Bangladesh 首例
+2020-03-08,BGR,first_case,Bulgaria 首例
+2020-03-08,MDA,first_case,Moldova 首例
+2020-03-08,MDV,first_case,Maldives 首例
+2020-03-08,PRY,first_case,Paraguay 首例
+2020-03-08,AUT,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-08,BGR,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-08,EGY,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-08,HUN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-08,KHM,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-08,MDV,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-08,PER,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-09,ALB,first_case,Albania 首例
+2020-03-09,BRN,first_case,Brunei 首例
+2020-03-09,CYP,first_case,Cyprus 首例
+2020-03-09,MNG,first_case,Mongolia 首例
+2020-03-09,PAN,first_case,Panama 首例
+2020-03-09,BGD,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-09,BHR,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-09,BIH,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-09,CHL,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-09,CRI,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-09,IRQ,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-09,MKD,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-09,PAK,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-09,POL,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-09,PSE,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-09,AUT,policy,開始禁止部分國家旅客入境
+2020-03-09,HUN,policy,開始禁止部分國家旅客入境
+2020-03-09,ROU,policy,開始禁止部分國家旅客入境
+2020-03-10,BFA,first_case,Burkina Faso 首例
+2020-03-10,BIH,policy,開始禁止部分國家旅客入境
+2020-03-10,ESP,policy,開始禁止部分國家旅客入境
+2020-03-10,MDA,policy,開始禁止部分國家旅客入境
+2020-03-10,MLT,policy,開始禁止部分國家旅客入境
+2020-03-10,PRT,policy,開始禁止部分國家旅客入境
+2020-03-10,SVN,policy,開始禁止部分國家旅客入境
+2020-03-10,SYC,policy,開始禁止部分國家旅客入境
+2020-03-10,SYR,policy,開始禁止部分國家旅客入境
+2020-03-11,BOL,first_case,Bolivia 首例
+2020-03-11,CIV,first_case,Cote d'Ivoire 首例
+2020-03-11,COD,first_case,Congo (Kinshasa) 首例
+2020-03-11,HND,first_case,Honduras 首例
+2020-03-11,JAM,first_case,Jamaica 首例
+2020-03-11,TUR,first_case,Turkey 首例
+2020-03-11,ALB,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-11,PRY,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-11,SAU,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-11,SRB,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-11,TUN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-11,DNK,policy,開始禁止部分國家旅客入境
+2020-03-11,MCO,policy,開始禁止部分國家旅客入境
+2020-03-11,SRB,policy,開始禁止部分國家旅客入境
+2020-03-11,WORLD,policy,WHO 宣布 COVID-19 為全球大流行
+2020-03-12,CUB,first_case,Cuba 首例
+2020-03-12,GUY,first_case,Guyana 首例
+2020-03-12,BRN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-12,KWT,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-12,LUX,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-12,MAR,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-12,PAN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-12,QAT,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-12,GTM,policy,開始禁止部分國家旅客入境
+2020-03-12,VEN,policy,開始禁止部分國家旅客入境
+2020-03-13,ATG,first_case,Antigua and Barbuda 首例
+2020-03-13,ETH,first_case,Ethiopia 首例
+2020-03-13,GIN,first_case,Guinea 首例
+2020-03-13,KAZ,first_case,Kazakhstan 首例
+2020-03-13,KEN,first_case,Kenya 首例
+2020-03-13,URY,first_case,Uruguay 首例
+2020-03-13,VCT,first_case,Saint Vincent and the Grenadines 首例
+2020-03-13,ALB,policy,首次實施居家令
+2020-03-13,BOL,policy,開始禁止部分國家旅客入境
+2020-03-13,CHE,policy,開始禁止部分國家旅客入境
+2020-03-13,FRO,policy,開始禁止部分國家旅客入境
+2020-03-13,GRL,policy,開始禁止部分國家旅客入境
+2020-03-13,IRQ,policy,首次實施居家令
+2020-03-13,JAM,policy,首次實施居家令
+2020-03-13,KHM,policy,開始禁止部分國家旅客入境
+2020-03-13,LIE,policy,開始禁止部分國家旅客入境
+2020-03-13,MAR,policy,開始禁止部分國家旅客入境
+2020-03-13,NLD,policy,開始禁止部分國家旅客入境
+2020-03-13,PAN,policy,開始禁止部分國家旅客入境
+2020-03-13,RKS,policy,開始禁止部分國家旅客入境
+2020-03-13,SSD,policy,開始禁止部分國家旅客入境
+2020-03-13,SVK,policy,開始禁止部分國家旅客入境
+2020-03-13,VEN,policy,首次實施居家令
+2020-03-14,GAB,first_case,Gabon 首例
+2020-03-14,GHA,first_case,Ghana 首例
+2020-03-14,GTM,first_case,Guatemala 首例
+2020-03-14,LCA,first_case,Saint Lucia 首例
+2020-03-14,MRT,first_case,Mauritania 首例
+2020-03-14,NAM,first_case,Namibia 首例
+2020-03-14,RWA,first_case,Rwanda 首例
+2020-03-14,SDN,first_case,Sudan 首例
+2020-03-14,SUR,first_case,Suriname 首例
+2020-03-14,SWZ,first_case,Eswatini 首例
+2020-03-14,TTO,first_case,Trinidad and Tobago 首例
+2020-03-14,VEN,first_case,Venezuela 首例
+2020-03-14,XKS,first_case,Kosovo 首例
+2020-03-14,ARG,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-14,EST,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-14,LKA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-14,SEN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-14,UKR,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-14,ZAF,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-14,BLR,policy,開始禁止部分國家旅客入境
+2020-03-14,DZA,policy,開始禁止部分國家旅客入境
+2020-03-14,ESP,policy,首次實施居家令
+2020-03-14,GRC,policy,開始禁止部分國家旅客入境
+2020-03-14,KGZ,policy,開始禁止部分國家旅客入境
+2020-03-14,LKA,policy,開始禁止部分國家旅客入境
+2020-03-14,NAM,policy,開始禁止部分國家旅客入境
+2020-03-14,PRY,policy,開始禁止部分國家旅客入境
+2020-03-14,SOM,policy,開始禁止部分國家旅客入境
+2020-03-14,SUR,policy,開始禁止部分國家旅客入境
+2020-03-15,CAF,first_case,Central African Republic 首例
+2020-03-15,COG,first_case,Congo (Brazzaville) 首例
+2020-03-15,GNQ,first_case,Equatorial Guinea 首例
+2020-03-15,SYC,first_case,Seychelles 首例
+2020-03-15,UZB,first_case,Uzbekistan 首例
+2020-03-15,ARM,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-15,CHN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-15,COL,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-15,GUY,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-15,JAM,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-15,RWA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-15,ALB,policy,開始禁止部分國家旅客入境
+2020-03-15,BLZ,policy,開始禁止部分國家旅客入境
+2020-03-15,CYP,policy,開始禁止部分國家旅客入境
+2020-03-15,CZE,policy,首次實施居家令
+2020-03-15,ECU,policy,開始禁止部分國家旅客入境
+2020-03-15,IND,policy,開始禁止部分國家旅客入境
+2020-03-15,JOR,policy,開始禁止部分國家旅客入境
+2020-03-15,MCO,policy,首次實施居家令
+2020-03-15,MDG,policy,開始禁止部分國家旅客入境
+2020-03-15,NOR,policy,開始禁止部分國家旅客入境
+2020-03-15,PER,policy,首次實施居家令
+2020-03-15,PHL,policy,首次實施居家令
+2020-03-15,POL,policy,開始禁止部分國家旅客入境
+2020-03-15,PRI,policy,開始禁止部分國家旅客入境
+2020-03-15,PRI,policy,首次實施居家令
+2020-03-15,SAU,policy,開始禁止部分國家旅客入境
+2020-03-15,SRB,policy,首次實施居家令
+2020-03-15,USA,policy,首次實施居家令
+2020-03-16,BEN,first_case,Benin 首例
+2020-03-16,BHS,first_case,Bahamas 首例
+2020-03-16,SOM,first_case,Somalia 首例
+2020-03-16,TZA,first_case,Tanzania 首例
+2020-03-16,ARG,policy,開始禁止部分國家旅客入境
+2020-03-16,AUT,policy,首次實施居家令
+2020-03-16,BWA,policy,開始禁止部分國家旅客入境
+2020-03-16,CIV,policy,開始禁止部分國家旅客入境
+2020-03-16,DEU,policy,開始禁止部分國家旅客入境
+2020-03-16,DOM,policy,開始禁止部分國家旅客入境
+2020-03-16,GUM,policy,開始禁止部分國家旅客入境
+2020-03-16,HND,policy,開始禁止部分國家旅客入境
+2020-03-16,HND,policy,首次實施居家令
+2020-03-16,HTI,policy,開始禁止部分國家旅客入境
+2020-03-16,LBR,policy,開始禁止部分國家旅客入境
+2020-03-16,LBY,policy,開始禁止部分國家旅客入境
+2020-03-16,LTU,policy,開始禁止部分國家旅客入境
+2020-03-16,PER,policy,開始禁止部分國家旅客入境
+2020-03-16,SDN,policy,開始禁止部分國家旅客入境
+2020-03-16,TUN,policy,開始禁止部分國家旅客入境
+2020-03-16,UKR,policy,開始禁止部分國家旅客入境
+2020-03-16,URY,policy,開始禁止部分國家旅客入境
+2020-03-16,UZB,policy,開始禁止部分國家旅客入境
+2020-03-16,YEM,policy,開始禁止部分國家旅客入境
+2020-03-17,BRB,first_case,Barbados 首例
+2020-03-17,GMB,first_case,Gambia 首例
+2020-03-17,LBR,first_case,Liberia 首例
+2020-03-17,MNE,first_case,Montenegro 首例
+2020-03-17,BHS,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-17,DOM,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-17,GUM,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-17,KEN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-17,MDA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-17,ABW,policy,開始禁止部分國家旅客入境
+2020-03-17,BGR,policy,開始禁止部分國家旅客入境
+2020-03-17,BOL,policy,首次實施居家令
+2020-03-17,CRI,policy,開始禁止部分國家旅客入境
+2020-03-17,ECU,policy,首次實施居家令
+2020-03-17,EST,policy,開始禁止部分國家旅客入境
+2020-03-17,FRA,policy,開始禁止部分國家旅客入境
+2020-03-17,FRA,policy,首次實施居家令
+2020-03-17,GHA,policy,開始禁止部分國家旅客入境
+2020-03-17,KEN,policy,開始禁止部分國家旅客入境
+2020-03-17,LUX,policy,首次實施居家令
+2020-03-17,LVA,policy,開始禁止部分國家旅客入境
+2020-03-17,PRY,policy,首次實施居家令
+2020-03-17,SWZ,policy,開始禁止部分國家旅客入境
+2020-03-17,TON,policy,開始禁止部分國家旅客入境
+2020-03-18,DJI,first_case,Djibouti 首例
+2020-03-18,KGZ,first_case,Kyrgyzstan 首例
+2020-03-18,MUS,first_case,Mauritius 首例
+2020-03-18,ZMB,first_case,Zambia 首例
+2020-03-18,BEL,policy,首次實施居家令
+2020-03-18,BGR,policy,首次實施居家令
+2020-03-18,CAN,policy,開始禁止部分國家旅客入境
+2020-03-18,CAN,policy,首次實施居家令
+2020-03-18,CHL,policy,開始禁止部分國家旅客入境
+2020-03-18,CMR,policy,開始禁止部分國家旅客入境
+2020-03-18,DJI,policy,開始禁止部分國家旅客入境
+2020-03-18,GUY,policy,開始禁止部分國家旅客入境
+2020-03-18,JOR,policy,首次實施居家令
+2020-03-18,LBN,policy,首次實施居家令
+2020-03-18,LKA,policy,首次實施居家令
+2020-03-18,LSO,policy,首次實施居家令
+2020-03-18,MAC,policy,開始禁止部分國家旅客入境
+2020-03-18,SEN,policy,開始禁止部分國家旅客入境
+2020-03-18,TCD,policy,開始禁止部分國家旅客入境
+2020-03-18,ZAF,policy,開始禁止部分國家旅客入境
+2020-03-19,FJI,first_case,Fiji 首例
+2020-03-19,NER,first_case,Niger 首例
+2020-03-19,NIC,first_case,Nicaragua 首例
+2020-03-19,SLV,first_case,El Salvador 首例
+2020-03-19,TCD,first_case,Chad 首例
+2020-03-19,CUB,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-19,CYP,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-19,GHA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-19,GUF,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-19,LBR,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-19,TUR,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-19,UZB,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-19,ARG,policy,首次實施居家令
+2020-03-19,BGD,policy,首次實施居家令
+2020-03-19,BRA,policy,開始禁止部分國家旅客入境
+2020-03-19,EGY,policy,開始禁止部分國家旅客入境
+2020-03-19,FJI,policy,首次實施居家令
+2020-03-19,HRV,policy,開始禁止部分國家旅客入境
+2020-03-19,HTI,policy,首次實施居家令
+2020-03-19,KAZ,policy,首次實施居家令
+2020-03-19,MRT,policy,首次實施居家令
+2020-03-19,MUS,policy,開始禁止部分國家旅客入境
+2020-03-19,NER,policy,開始禁止部分國家旅客入境
+2020-03-19,PRT,policy,首次實施居家令
+2020-03-20,AGO,first_case,Angola 首例
+2020-03-20,CPV,first_case,Cabo Verde 首例
+2020-03-20,HTI,first_case,Haiti 首例
+2020-03-20,MDG,first_case,Madagascar 首例
+2020-03-20,PNG,first_case,Papua New Guinea 首例
+2020-03-20,TLS,first_case,Timor-Leste 首例
+2020-03-20,ZWE,first_case,Zimbabwe 首例
+2020-03-20,OMN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-20,BEL,policy,開始禁止部分國家旅客入境
+2020-03-20,BHS,policy,首次實施居家令
+2020-03-20,BIH,policy,首次實施居家令
+2020-03-20,COD,policy,開始禁止部分國家旅客入境
+2020-03-20,CUB,policy,開始禁止部分國家旅客入境
+2020-03-20,GMB,policy,開始禁止部分國家旅客入境
+2020-03-20,HRV,policy,首次實施居家令
+2020-03-20,ISL,policy,開始禁止部分國家旅客入境
+2020-03-20,ISR,policy,首次實施居家令
+2020-03-20,MAR,policy,首次實施居家令
+2020-03-20,MWI,policy,開始禁止部分國家旅客入境
+2020-03-20,TGO,policy,開始禁止部分國家旅客入境
+2020-03-20,TLS,policy,開始禁止部分國家旅客入境
+2020-03-20,TUN,policy,首次實施居家令
+2020-03-21,ERI,first_case,Eritrea 首例
+2020-03-21,UGA,first_case,Uganda 首例
+2020-03-21,BFA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-21,FJI,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-21,FRO,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-21,RUS,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-21,BFA,policy,開始禁止部分國家旅客入境
+2020-03-21,BFA,policy,首次實施居家令
+2020-03-21,COG,policy,開始禁止部分國家旅客入境
+2020-03-21,DEU,policy,首次實施居家令
+2020-03-21,GAB,policy,首次實施居家令
+2020-03-21,GIN,policy,開始禁止部分國家旅客入境
+2020-03-21,KOR,policy,首次實施居家令
+2020-03-21,LBR,policy,首次實施居家令
+2020-03-21,MEX,policy,開始禁止部分國家旅客入境
+2020-03-21,RWA,policy,開始禁止部分國家旅客入境
+2020-03-21,RWA,policy,首次實施居家令
+2020-03-21,SLE,policy,開始禁止部分國家旅客入境
+2020-03-21,SLV,policy,首次實施居家令
+2020-03-21,TUR,policy,首次實施居家令
+2020-03-22,DMA,first_case,Dominica 首例
+2020-03-22,GRD,first_case,Grenada 首例
+2020-03-22,MOZ,first_case,Mozambique 首例
+2020-03-22,SYR,first_case,Syria 首例
+2020-03-22,BDI,policy,開始禁止部分國家旅客入境
+2020-03-22,GBR,policy,首次實施居家令
+2020-03-22,GTM,policy,首次實施居家令
+2020-03-22,IND,policy,首次實施居家令
+2020-03-22,KWT,policy,首次實施居家令
+2020-03-22,LBY,policy,首次實施居家令
+2020-03-22,NPL,policy,開始禁止部分國家旅客入境
+2020-03-22,PSE,policy,首次實施居家令
+2020-03-22,UGA,policy,開始禁止部分國家旅客入境
+2020-03-23,BLZ,first_case,Belize 首例
+2020-03-23,AND,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-23,AZE,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-23,GEO,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-23,JOR,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-23,LTU,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-23,LVA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-23,MCO,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-23,MEX,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-23,MLT,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-23,PYF,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-23,ARE,policy,首次實施居家令
+2020-03-23,BTN,policy,開始禁止部分國家旅客入境
+2020-03-23,COL,policy,開始禁止部分國家旅客入境
+2020-03-23,DJI,policy,首次實施居家令
+2020-03-23,DZA,policy,首次實施居家令
+2020-03-23,ETH,policy,開始禁止部分國家旅客入境
+2020-03-23,GEO,policy,首次實施居家令
+2020-03-23,GRC,policy,首次實施居家令
+2020-03-23,MDG,policy,首次實施居家令
+2020-03-23,MRT,policy,開始禁止部分國家旅客入境
+2020-03-23,MUS,policy,首次實施居家令
+2020-03-23,NGA,policy,開始禁止部分國家旅客入境
+2020-03-23,NLD,policy,首次實施居家令
+2020-03-23,NPL,policy,首次實施居家令
+2020-03-23,NZL,policy,首次實施居家令
+2020-03-23,PAK,policy,首次實施居家令
+2020-03-23,RKS,policy,首次實施居家令
+2020-03-23,SAU,policy,首次實施居家令
+2020-03-23,ZWE,policy,開始禁止部分國家旅客入境
+2020-03-24,LAO,first_case,Laos 首例
+2020-03-24,LBY,first_case,Libya 首例
+2020-03-24,MMR,first_case,Burma 首例
+2020-03-24,GTM,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-24,HND,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-24,JEY,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-24,KGZ,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-24,CUB,policy,首次實施居家令
+2020-03-24,CYP,policy,首次實施居家令
+2020-03-24,MDA,policy,首次實施居家令
+2020-03-25,GNB,first_case,Guinea-Bissau 首例
+2020-03-25,KNA,first_case,Saint Kitts and Nevis 首例
+2020-03-25,MLI,first_case,Mali 首例
+2020-03-25,ABW,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-25,BRB,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-25,GGY,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-25,GIB,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-25,MYT,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-25,NCL,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-25,REU,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-25,AFG,policy,首次實施居家令
+2020-03-25,CHL,policy,首次實施居家令
+2020-03-25,COL,policy,首次實施居家令
+2020-03-25,EGY,policy,首次實施居家令
+2020-03-25,ERI,policy,開始禁止部分國家旅客入境
+2020-03-25,KGZ,policy,首次實施居家令
+2020-03-25,MLI,policy,開始禁止部分國家旅客入境
+2020-03-25,PAN,policy,首次實施居家令
+2020-03-25,ROU,policy,首次實施居家令
+2020-03-25,SEN,policy,首次實施居家令
+2020-03-25,SYR,policy,首次實施居家令
+2020-03-25,THA,policy,開始禁止部分國家旅客入境
+2020-03-25,VIR,policy,首次實施居家令
+2020-03-26,AFG,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-26,AIA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-26,BLZ,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-26,BMU,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-26,DJI,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-26,DMA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-26,GRD,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-26,IMN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-26,MNE,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-26,MOZ,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-26,NGA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-26,TTO,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-26,CAF,policy,開始禁止部分國家旅客入境
+2020-03-26,CHN,policy,開始禁止部分國家旅客入境
+2020-03-26,LAO,policy,開始禁止部分國家旅客入境
+2020-03-26,MLI,policy,首次實施居家令
+2020-03-26,VUT,policy,開始禁止部分國家旅客入境
+2020-03-26,ZAF,policy,首次實施居家令
+2020-03-27,AGO,policy,首次實施居家令
+2020-03-27,HUN,policy,首次實施居家令
+2020-03-27,KEN,policy,首次實施居家令
+2020-03-27,MYS,policy,首次實施居家令
+2020-03-27,NAM,policy,首次實施居家令
+2020-03-27,SWZ,policy,首次實施居家令
+2020-03-27,UZB,policy,首次實施居家令
+2020-03-27,ZMB,policy,開始禁止部分國家旅客入境
+2020-03-28,BOL,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-28,COD,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-28,LAO,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-28,MLI,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-28,NER,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-28,URY,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-28,VEN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-28,ZMB,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-28,ZWE,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-28,COG,policy,首次實施居家令
+2020-03-28,DMA,policy,開始禁止部分國家旅客入境
+2020-03-28,IRL,policy,首次實施居家令
+2020-03-28,MLT,policy,首次實施居家令
+2020-03-28,SUR,policy,首次實施居家令
+2020-03-29,CIV,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-29,MMR,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-29,MUS,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-29,SLV,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-29,ABW,policy,首次實施居家令
+2020-03-29,EST,policy,首次實施居家令
+2020-03-29,LSO,policy,開始禁止部分國家旅客入境
+2020-03-29,NER,policy,首次實施居家令
+2020-03-29,NGA,policy,首次實施居家令
+2020-03-29,TON,policy,首次實施居家令
+2020-03-30,BWA,first_case,Botswana 首例
+2020-03-30,ETH,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-30,GNQ,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-30,LBY,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-30,TCA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-30,TGO,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-30,UGA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-30,GHA,policy,首次實施居家令
+2020-03-30,GIN,policy,首次實施居家令
+2020-03-30,LAO,policy,首次實施居家令
+2020-03-30,MEX,policy,首次實施居家令
+2020-03-30,MMR,policy,開始禁止部分國家旅客入境
+2020-03-30,RUS,policy,首次實施居家令
+2020-03-30,TTO,policy,首次實施居家令
+2020-03-30,UGA,policy,首次實施居家令
+2020-03-30,ZWE,policy,首次實施居家令
+2020-03-31,BDI,first_case,Burundi 首例
+2020-03-31,SLE,first_case,Sierra Leone 首例
+2020-03-31,GIN,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-31,KAZ,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-31,LCA,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-31,MTQ,local_transmission_start,WHO 分類轉為本土傳播
+2020-03-31,AZE,policy,首次實施居家令
+2020-03-31,BGD,policy,開始禁止部分國家旅客入境
+2020-03-31,POL,policy,首次實施居家令
+2020-04-01,CPV,policy,首次實施居家令
+2020-04-01,DMA,policy,首次實施居家令
+2020-04-01,ERI,policy,首次實施居家令
+2020-04-01,KIR,policy,首次實施居家令
+2020-04-01,VNM,policy,首次實施居家令
+2020-04-02,MWI,first_case,Malawi 首例
+2020-04-02,AUS,policy,首次實施居家令
+2020-04-02,BWA,policy,首次實施居家令
+2020-04-02,TCD,policy,首次實施居家令
+2020-04-02,TGO,policy,首次實施居家令
+2020-04-02,URY,policy,首次實施居家令
+2020-04-03,BRB,policy,首次實施居家令
+2020-04-03,GUY,policy,首次實施居家令
+2020-04-04,BMU,policy,首次實施居家令
+2020-04-05,SSD,first_case,South Sudan 首例
+2020-04-05,SLE,policy,首次實施居家令
+2020-04-06,STP,first_case,Sao Tome and Principe 首例
+2020-04-06,COD,policy,首次實施居家令
+2020-04-07,PNG,policy,首次實施居家令
+2020-04-08,AND,policy,開始禁止部分國家旅客入境
+2020-04-08,SGP,policy,首次實施居家令
+2020-04-08,SVK,policy,首次實施居家令
+2020-04-08,SYC,policy,首次實施居家令
+2020-04-10,YEM,first_case,Yemen 首例
+2020-04-10,IDN,policy,首次實施居家令
+2020-04-10,OMN,policy,首次實施居家令
+2020-04-10,SMR,policy,首次實施居家令
+2020-04-11,SOM,policy,首次實施居家令
+2020-04-12,TZA,policy,開始禁止部分國家旅客入境
+2020-04-14,MMR,policy,首次實施居家令
+2020-04-15,ZMB,policy,首次實施居家令
+2020-04-18,DOM,policy,首次實施居家令
+2020-04-18,SDN,policy,首次實施居家令
+2020-04-18,SSD,policy,首次實施居家令
+2020-04-27,BLZ,policy,首次實施居家令
+2020-04-30,COM,first_case,Comoros 首例
+2020-05-01,TJK,first_case,Tajikistan 首例
+2020-05-05,BRA,policy,首次實施居家令
+2020-05-08,CAF,policy,首次實施居家令
+2020-05-09,TJK,policy,首次實施居家令
+2020-05-13,LSO,first_case,Lesotho 首例
+2020-05-17,BEN,policy,開始禁止部分國家旅客入境
+2020-05-20,SLB,policy,首次實施居家令
+2020-05-28,YEM,policy,首次實施居家令
+2020-05-29,MOZ,policy,開始禁止部分國家旅客入境
+2020-07-11,IRN,policy,開始禁止部分國家旅客入境
+2020-08-06,GMB,policy,首次實施居家令
+2020-08-11,BTN,policy,首次實施居家令
+2020-08-15,GUM,policy,首次實施居家令
+2020-08-21,LUX,policy,開始禁止部分國家旅客入境
+2020-09-17,BHR,policy,首次實施居家令
+2020-10-06,IRN,policy,首次實施居家令
+2020-10-12,SLB,first_case,Solomon Islands 首例
+2020-10-20,SVN,policy,首次實施居家令
+2020-10-28,MHL,first_case,Marshall Islands 首例
+2020-11-10,VUT,first_case,Vanuatu 首例
+2020-11-12,MNG,policy,首次實施居家令
+2020-11-17,TLS,policy,首次實施居家令
+2020-11-18,WSM,first_case,Samoa 首例
+2020-11-30,KHM,policy,首次實施居家令
+2020-12-16,LTU,policy,首次實施居家令
+2020-12-22,IRL,policy,開始禁止部分國家旅客入境
+2020-12-24,GBR,policy,開始禁止部分國家旅客入境
+2020-12-30,LVA,policy,首次實施居家令
+2021-01-16,THA,policy,首次實施居家令
+2021-01-21,FSM,first_case,Micronesia 首例
+2021-02-04,MOZ,policy,首次實施居家令
+2021-03-09,MWI,policy,首次實施居家令
+2021-04-09,QAT,policy,首次實施居家令
+2021-05-18,KIR,first_case,Kiribati 首例
+2021-05-19,TWN,policy,首次實施居家令
+2021-08-09,BRN,policy,首次實施居家令
+2021-08-22,PLW,first_case,Palau 首例
+2021-10-29,TON,first_case,Tonga 首例
+2021-12-05,TKM,policy,首次實施居家令
+2021-12-14,ATA,first_case,Antarctica 首例
+2022-03-07,VUT,policy,首次實施居家令
+2022-04-04,NRU,first_case,Nauru 首例
+2022-05-14,PRK,first_case,"Korea, North 首例"
+2022-05-23,TUV,first_case,Tuvalu 首例
+2022-06-19,MAC,policy,首次實施居家令

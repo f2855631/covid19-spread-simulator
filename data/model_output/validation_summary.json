@@ -1,0 +1,119 @@
+{
+ "benchmark": [
+  {
+   "method": "模型（校準後 SEIR）",
+   "group": "訓練組（2/29 前首例）",
+   "n": 59,
+   "predicted": 57,
+   "mae_days": 6.4,
+   "within14": 0.864,
+   "spearman": 0.76
+  },
+  {
+   "method": "模型（校準後 SEIR）",
+   "group": "測試組（3 月首例）",
+   "n": 118,
+   "predicted": 108,
+   "mae_days": 11.4,
+   "within14": 0.746,
+   "spearman": 0.43
+  },
+  {
+   "method": "基準 B：只看與中國的航線數",
+   "group": "訓練組（2/29 前首例）",
+   "n": 59,
+   "predicted": 59,
+   "mae_days": 6.4,
+   "within14": 0.881,
+   "spearman": 0.78
+  },
+  {
+   "method": "基準 B：只看與中國的航線數",
+   "group": "測試組（3 月首例）",
+   "n": 118,
+   "predicted": 118,
+   "mae_days": 18.6,
+   "within14": 0.305,
+   "spearman": 0.07
+  },
+  {
+   "method": "基準 A：一律猜中位數",
+   "group": "訓練組（2/29 前首例）",
+   "n": 59,
+   "predicted": 59,
+   "mae_days": 13.6,
+   "within14": 0.576,
+   "spearman": null
+  },
+  {
+   "method": "基準 A：一律猜中位數",
+   "group": "測試組（3 月首例）",
+   "n": 118,
+   "predicted": 118,
+   "mae_days": 17.6,
+   "within14": 0.373,
+   "spearman": null
+  }
+ ],
+ "by_continent": [
+  {
+   "continent": "Asia",
+   "n": 43,
+   "predicted": 40,
+   "mae_days": 13.7,
+   "bias_days": -9.7,
+   "within14": 0.605
+  },
+  {
+   "continent": "Europe",
+   "n": 45,
+   "predicted": 40,
+   "mae_days": 7.5,
+   "bias_days": -1.7,
+   "within14": 0.822
+  },
+  {
+   "continent": "Africa",
+   "n": 49,
+   "predicted": 46,
+   "mae_days": 10.3,
+   "bias_days": -1.4,
+   "within14": 0.755
+  },
+  {
+   "continent": "North America",
+   "n": 23,
+   "predicted": 23,
+   "mae_days": 8.0,
+   "bias_days": -6.8,
+   "within14": 1.0
+  },
+  {
+   "continent": "South America",
+   "n": 12,
+   "predicted": 12,
+   "mae_days": 4.1,
+   "bias_days": 1.2,
+   "within14": 1.0
+  },
+  {
+   "continent": "Oceania",
+   "n": 4,
+   "predicted": 4,
+   "mae_days": 8.8,
+   "bias_days": -8.2,
+   "within14": 1.0
+  }
+ ],
+ "ensemble": {
+  "runs": 50,
+  "coverage_p10_p90": 0.316,
+  "median_width_days": 17.199999999999996
+ },
+ "sensitivity_base_top30_mae": 5.766666666666667,
+ "curves": {
+  "curve_rmse_log10": 0.19948146719867446,
+  "curve_mape": 0.4272436287954797,
+  "daily_rmse_log10": 0.0876127630870733
+ }
+}

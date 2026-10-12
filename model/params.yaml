@@ -1,0 +1,57 @@
+# 全球 COVID-19 擴散模擬器 — 模型參數
+# 所有數字集中在這裡，程式裡不寫死。
+# 湖北參數由 model/run_hubei.py 擬合；標「第四階段校準」的由 model/calibrate.py 用真實資料校準（2026-10-13）。
+
+simulation:
+  start: "2019-12-01"          # 模擬起始日
+  end: "2020-04-30"            # 模擬結束日
+  steps_per_day: 4             # RK4 每天的子步數
+
+origin:
+  node: "CHN-HUB"              # 起點：湖北（含武漢）
+  seed_date: "2019-12-01"      # 起始感染放入日（假設；與起始感染人數一起決定 1 月時的規模）
+  seed_infected: 1             # 起始感染人數（由 run_hubei.py 擬合）
+  travel_population: 11000000  # 武漢常住人口約 1,100 萬：感染者與國際航班都集中在武漢，出行機率以此為分母
+
+epidemiology:
+  # Li Q, et al. Early Transmission Dynamics in Wuhan, China, of Novel Coronavirus–Infected
+  # Pneumonia. N Engl J Med 2020;382:1199-1207（PMID 31995857）：
+  #   R0 = 2.2（95% CI 1.4–3.9）、平均潛伏期 5.2 天、平均傳染間隔 7.5 天
+  R0: 3.0                      # 基本再生數（由 run_hubei.py 擬合；文獻 95% CI 1.4–3.9 之內）
+  latent_days: 3.0             # 1/σ：感染到具傳染力（潛伏期 5.2 天扣除約 2 天發病前傳染）
+  infectious_days: 4.5         # 1/γ：具傳染力的天數；latent + infectious = 7.5 ≈ 傳染間隔
+  policy_effect: 0.9           # 湖北的防疫強度效果 k：β(t) = β0 × (1 − k × 嚴格指數/100)（由 run_hubei.py 擬合）
+  policy_effect_world: 0.83     # 其他地區的防疫強度效果 k（第四階段校準）
+  # 疫調量能：病例少時，檢測 + 接觸者追蹤 + 隔離能大幅壓低傳播；感染者超過量能後效果迅速消失
+  #   β 乘上 (1 − 降低比例 × 量能 / (量能 + 具傳染力人數))，量能 = 每百萬人量能 × 人口 / 1e6
+  #   （OxCGRT 的 H2/H3 指標無法區分：例如泰國 2020 年 2 月皆為 0，因此改用此通用機制）
+  tracing_reduction: 0.006741       # 病例很少時傳播可降低的最大比例（第四階段校準 ≈ 0：資料不支持此機制，等同關閉）
+  tracing_capacity_per_million: 1.77  # 每百萬人可有效追蹤的感染者數（第四階段校準；因上項 ≈ 0 而幾乎無作用）
+
+reporting:
+  ratio_default: 0.04202          # 通報率 ρ：感染者中被確診的比例（第四階段校準：約每 24 位感染者確診 1 位）
+  # 湖北通報率隨檢測量擴充而上升：early → late 之間線性增加
+  #   1 月中檢測試劑有限；2/12 起湖北把臨床診斷病例也算入確診
+  ratio_hubei_early: 0.01      # 湖北 1 月中以前的通報率（由 run_hubei.py 擬合）
+  ratio_hubei: 0.35            # 湖北 2/12 以後的通報率（由 run_hubei.py 擬合）
+  hubei_ramp_start: "2020-01-16"
+  hubei_ramp_end: "2020-02-12"
+  delay_days: 8                # 感染到確診的延遲（潛伏 + 就醫 + 檢驗）
+  testing_start: "2020-01-11"  # 病毒基因序列公開，之前無法確診（此前的感染者不計入確診）
+  detect_threshold: 0.5        # 模型「首例日」：預期累計確診 ≥ 此值的第一天
+  # 入境旅客：2020 年初各國對來自疫區的旅客有篩檢與追蹤，被驗出的機率較高、也較快
+  import_ratio: 0.1966            # 移入感染者被確診的比例（第四階段校準）
+  import_delay_days: 5         # 移入到確診的延遲（假設）
+
+travel:
+  passengers_per_route_per_day: 454.3   # 每條航線每日旅客數（第四階段校準；OpenFlights 無班次資料，此值也吸收了班次與轉機）
+  hubei_china_ground_per_day: 200000  # 湖北 ↔ 中國其他省份的鐵公路旅客（假設；未納入校準）
+  hubei_transit_fraction: 0.0715        # 中國出境國際旅客中，來自湖北、經國內樞紐轉機者的比例（第四階段校準）
+  infectious_travel_factor: 0.5       # 具傳染力者（I）出行機率相對於潛伏者（E）
+  arrival_threshold: 1.0              # 累計移入感染者 ≥ 1 人才開始本地傳播（避免「0.001 人」也能指數成長）
+  # 入境管制（OxCGRT C8EV 等級 → 入境旅客保留比例）
+  inbound_by_c8_level: {0: 1.0, 1: 1.0, 2: 0.8, 3: 0.4, 4: 0.05}
+
+lockdown:
+  wuhan_date: "2020-01-23"     # 武漢封城
+  wuhan_travel_reduction: 0.95 # 封城後湖北對外移動減少比例

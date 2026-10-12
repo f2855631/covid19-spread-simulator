@@ -1,0 +1,777 @@
+<title>COVID-19 全球擴散模擬器</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap">
+<style>
+/* 版面概念：航空路線圖 × 疫情通報。地圖是主角，時間軸是索引，右欄是儀表與控制台。 */
+:root {
+  --paper: #eef2f1;        /* 頁面底色：帶一點綠的冷灰，像航圖紙 */
+  --panel: #f8faf9;
+  --ink: #17242b;          /* 主要文字：深石板藍 */
+  --muted: #5d6c72;
+  --rule: #cdd7d6;
+  --ocean: #dfe8ea;
+  --land: #fbfcfb;
+  --border: #b9c6c7;
+  --infect: #c42f3a;       /* 感染 / 擴散路線：信號紅 */
+  --infect-soft: rgba(196, 47, 58, 0.16);
+  --obs: #1d6a7f;          /* 真實資料：深青 */
+  --event: #b97a12;        /* 關鍵時機點：琥珀 */
+  --focus: #1d6a7f;
+  --font-display: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+  --font-body: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f171b; --panel: #142027; --ink: #e2ebec; --muted: #93a4a9; --rule: #26363d;
+    --ocean: #0b1316; --land: #1a2930; --border: #2e434b; --infect: #ff5d66; --infect-soft: rgba(255, 93, 102, 0.18);
+    --obs: #5cc0d8; --event: #e9ac45; --focus: #5cc0d8; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f171b; --panel: #142027; --ink: #e2ebec; --muted: #93a4a9; --rule: #26363d;
+  --ocean: #0b1316; --land: #1a2930; --border: #2e434b; --infect: #ff5d66; --infect-soft: rgba(255, 93, 102, 0.18);
+  --obs: #5cc0d8; --event: #e9ac45; --focus: #5cc0d8; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 14px; line-height: 1.55; }
+.wrap { max-width: 1440px; margin: 0 auto; padding-inline: 20px; padding-block: 18px 40px; display: grid; gap: 16px; }
+.mono { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+button, select, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* 標頭 */
+header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; border-bottom: 1px solid var(--rule); padding-bottom: 12px; }
+h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(22px, 3vw, 30px); letter-spacing: 0.02em; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); margin: 2px 0 0; max-width: 62ch; }
+.clock { text-align: right; }
+.clock .date { font-family: var(--font-data); font-size: 26px; font-weight: 500; letter-spacing: 0.02em; }
+.clock .day { color: var(--muted); font-size: 12px; letter-spacing: 0.08em; }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; padding: 2px; background: var(--panel); }
+.seg button { border: 0; background: transparent; padding: 5px 14px; border-radius: 999px; cursor: pointer; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+/* 主區 */
+.main { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+@media (max-width: 980px) { .main { grid-template-columns: minmax(0, 1fr); } }
+.mapcol { display: grid; gap: 10px; min-width: 0; }
+.mapbox { position: relative; background: var(--ocean); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+#map { display: block; width: 100%; height: auto; touch-action: manipulation; }
+.country { stroke: var(--border); stroke-width: 0.5; cursor: pointer; }
+.country.sel { stroke: var(--ink); stroke-width: 1.4; }
+.graticule { fill: none; stroke: var(--border); stroke-opacity: 0.35; stroke-width: 0.4; }
+.arc { fill: none; stroke-linecap: round; pointer-events: none; }
+.pt { stroke: var(--paper); stroke-width: 0.8; cursor: pointer; }
+.origin { fill: var(--infect); stroke: var(--paper); stroke-width: 1; }
+.pulse { fill: none; stroke: var(--event); stroke-width: 2; }
+@media (prefers-reduced-motion: no-preference) { .pulse { animation: pulse 1.6s ease-out infinite; transform-box: fill-box; transform-origin: center; } }
+@keyframes pulse { from { opacity: 1; transform: scale(0.6); } to { opacity: 0; transform: scale(2.2); } }
+.legend { position: absolute; left: 10px; bottom: 10px; background: color-mix(in srgb, var(--panel) 88%, transparent); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 10px; font-size: 11.5px; color: var(--muted); display: grid; gap: 4px; }
+.legend .ramp { display: flex; align-items: center; gap: 6px; }
+.legend .bar { width: 110px; height: 8px; border-radius: 2px; }
+.legend .row { display: flex; align-items: center; gap: 6px; }
+.legend svg { overflow: visible; }
+@media (max-width: 640px) {
+  .legend { position: static; border: 0; border-top: 1px solid var(--rule); border-radius: 0; background: var(--panel); grid-template-columns: 1fr 1fr; }
+  .events .score, .events th:last-child { display: none; }
+  .clock { text-align: left; }
+}
+.tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 6px 9px; font-size: 12.5px; box-shadow: 0 2px 10px rgba(0,0,0,.12); max-width: 260px; }
+
+/* 播放列與時間軸 */
+.transport { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.btn { border: 1px solid var(--border); background: var(--panel); border-radius: 4px; padding: 5px 12px; cursor: pointer; }
+.btn:hover { border-color: var(--ink); }
+.btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--border); background: var(--panel); border-radius: 999px; padding: 2px 10px 2px 8px; cursor: pointer; font-size: 12.5px; display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+.chip[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); }
+.chip i { width: 8px; height: 8px; border-radius: 2px; transform: rotate(45deg); display: inline-block; }
+.topn { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12.5px; margin-left: auto; }
+.timeline { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; }
+#tl { display: block; width: 100%; height: 92px; cursor: crosshair; touch-action: none; }
+#tl text { fill: var(--muted); font-family: var(--font-data); font-size: 10.5px; }
+#tl .axis { stroke: var(--border); }
+#tl .cursor { stroke: var(--ink); stroke-width: 1.2; }
+#tl .gm { fill: var(--muted); opacity: 0.35; }
+
+/* 右欄 */
+aside { display: grid; gap: 14px; min-width: 0; }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; padding: 12px 14px; display: grid; gap: 8px; min-width: 0; }
+.card h2 { font-size: 12px; letter-spacing: 0.1em; color: var(--muted); font-weight: 500; margin: 0; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.stat .v { font-family: var(--font-data); font-size: 19px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.stat .l { color: var(--muted); font-size: 11.5px; line-height: 1.35; }
+.delta { font-family: var(--font-data); font-size: 11.5px; }
+.delta.up { color: var(--infect); } .delta.down { color: var(--obs); }
+.sel-name { font-weight: 700; font-size: 16px; }
+.chain { font-size: 13px; color: var(--muted); }
+.chain b { color: var(--ink); font-weight: 500; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 13px; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+#chart { width: 100%; height: 170px; display: block; }
+#chart text { fill: var(--muted); font-family: var(--font-data); font-size: 10px; }
+.ctl { display: grid; gap: 4px; }
+.ctl label { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; }
+.ctl label output { font-family: var(--font-data); color: var(--ink); }
+.ctl input[type=range] { width: 100%; accent-color: var(--infect); }
+.ctl .hint { color: var(--muted); font-size: 11.5px; }
+.ctl select { width: 100%; padding: 4px 6px; border: 1px solid var(--border); border-radius: 4px; background: var(--paper); }
+.ctl label.check { display: flex; justify-content: flex-start; align-items: center; gap: 8px; font-size: 13px; }
+.note { color: var(--muted); font-size: 12px; }
+.compare { display: grid; gap: 4px; font-size: 12.5px; }
+.compare div { display: flex; justify-content: space-between; gap: 8px; }
+
+/* 事件列表 */
+.events { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; max-height: 300px; overflow: auto; }
+.events table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.events th { position: sticky; top: 0; background: var(--panel); text-align: left; font-weight: 500; color: var(--muted); font-size: 11.5px; letter-spacing: 0.06em; padding: 6px 10px; border-bottom: 1px solid var(--rule); }
+.events td:nth-child(-n+2) { white-space: nowrap; }
+.events td { padding: 5px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.events tr { cursor: pointer; }
+.events tr:hover td, .events tr.on td { background: color-mix(in srgb, var(--event) 12%, transparent); }
+.events .score { width: 64px; }
+.events .score span { display: block; height: 6px; border-radius: 2px; background: var(--event); }
+/* 分頁 */
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
+.tabs button { border: 0; background: transparent; padding: 8px 14px; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--infect); font-weight: 500; }
+/* 個體模擬 */
+.abm { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+@media (max-width: 980px) { .abm { grid-template-columns: minmax(0, 1fr); } }
+.citybox { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+#city { display: block; width: 100%; }
+.abm .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin: 0 4px 0 8px; }
+#abm-chart { width: 100%; height: 160px; display: block; }
+#abm-chart text { fill: var(--muted); font-family: var(--font-data); font-size: 10px; }
+.btnrow { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn:disabled { opacity: 0.6; cursor: default; }
+footer { color: var(--muted); font-size: 12px; border-top: 1px solid var(--rule); padding-top: 10px; display: grid; gap: 4px; }
+footer p { margin: 0; max-width: 110ch; }
+.err { color: var(--infect); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>COVID-19 全球擴散模擬器</h1>
+      <p class="sub">從 2019 年 12 月的武漢出發，沿國際航線擴散到 197 個國家／地區。模型以 WHO、JHU 資料校準，可調整參數重算。</p>
+    </div>
+    <div class="seg g-only" role="group" aria-label="資料來源">
+      <button id="m-sim" aria-pressed="true">模擬</button>
+      <button id="m-real" aria-pressed="false">真實資料</button>
+    </div>
+    <div class="clock g-only">
+      <div class="date" id="date">2020-02-26</div>
+      <div class="day" id="dayno">第 88 天</div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="檢視">
+    <button role="tab" id="tab-btn-global" aria-selected="true" aria-controls="tab-global">全球擴散</button>
+    <button role="tab" id="tab-btn-abm" aria-selected="false" aria-controls="tab-abm">個體模擬：一座城市裡的傳播</button>
+  </nav>
+
+  <div class="main" id="tab-global" role="tabpanel" aria-labelledby="tab-btn-global">
+    <div class="mapcol">
+      <div class="mapbox" id="mapbox">
+        <svg id="map" role="img" aria-label="世界地圖：擴散點與擴散路線"></svg>
+        <div class="legend" id="legend"></div>
+        <div class="tip" id="tip" hidden></div>
+      </div>
+      <div class="transport">
+        <button class="btn primary" id="play" aria-label="播放">▶ 播放</button>
+        <div class="chips" id="chips" role="group" aria-label="時機點類型"></div>
+        <label class="topn" for="topn">顯示前 <output id="topn-v" class="mono">20</output> 個
+          <input type="range" id="topn" min="5" max="60" step="1" value="20"></label>
+      </div>
+      <div class="timeline"><svg id="tl" role="slider" aria-label="日期" tabindex="0"></svg></div>
+      <div class="events" id="events"></div>
+    </div>
+
+    <aside>
+      <section class="card" aria-labelledby="h-now">
+        <h2 id="h-now">當日概況</h2>
+        <div class="stats">
+          <div class="stat"><div class="v" id="s-count">0</div><div class="l">出現病例的國家／地區</div><div class="delta" id="d-count"></div></div>
+          <div class="stat"><div class="v" id="s-rep">0</div><div class="l" id="s-rep-l">累計確診（中國以外）</div><div class="delta" id="d-rep"></div></div>
+          <div class="stat"><div class="v" id="s-inf">—</div><div class="l">模型估計實際感染（全球）</div><div class="delta" id="d-inf"></div></div>
+        </div>
+        <svg id="chart" aria-label="中國以外累計確診曲線"></svg>
+        <div class="note" id="chart-note"></div>
+      </section>
+
+      <section class="card" aria-labelledby="h-sel">
+        <h2 id="h-sel">選取的國家</h2>
+        <div id="sel">點地圖上的國家或擴散點，查看它的首例日與感染來源鏈。</div>
+      </section>
+
+      <section class="card" aria-labelledby="h-ctl" id="controls">
+        <h2 id="h-ctl">情境參數</h2>
+        <div class="ctl">
+          <label for="p-r0">基本再生數 R0 <output id="o-r0"></output></label>
+          <input type="range" id="p-r0" min="1.5" max="4.5" step="0.1">
+        </div>
+        <div class="ctl">
+          <label for="p-k">各國防疫措施效果 <output id="o-k"></output></label>
+          <input type="range" id="p-k" min="0" max="1.2" step="0.05">
+          <div class="hint">傳播率 × (1 − 效果 × 嚴格指數 / 100)；嚴格指數來自 OxCGRT</div>
+        </div>
+        <div class="ctl">
+          <label for="p-lock">武漢封城日期 <output id="o-lock"></output></label>
+          <input type="range" id="p-lock" min="0" max="80" step="1">
+        </div>
+        <div class="ctl">
+          <label for="p-lockr">封城後湖北對外移動減少 <output id="o-lockr"></output></label>
+          <input type="range" id="p-lockr" min="0" max="0.99" step="0.01">
+        </div>
+        <div class="ctl">
+          <label for="p-pax">國際航班旅客量 <output id="o-pax"></output></label>
+          <input type="range" id="p-pax" min="0.1" max="3" step="0.05">
+        </div>
+        <div class="ctl">
+          <label class="check" for="p-cut-on"><input type="checkbox" id="p-cut-on"> 全球國際航班管制</label>
+          <label for="p-cut">開始日 <output id="o-cut"></output></label>
+          <input type="range" id="p-cut" min="40" max="120" step="1" value="62">
+          <label for="p-cutk">航班保留 <output id="o-cutk"></output></label>
+          <input type="range" id="p-cutk" min="0" max="1" step="0.05" value="0.5">
+        </div>
+        <div class="ctl">
+          <label for="p-origin">病毒起點</label>
+          <select id="p-origin"></select>
+        </div>
+        <div class="compare" id="compare"></div>
+        <button class="btn" id="reset">恢復校準值</button>
+      </section>
+      <p class="note" id="real-note" hidden>真實資料模式：擴散點是各國實際首例日（JHU、WHO），擴散路線由航線數 × 來源地近 14 天新增確診推算。切回「模擬」可調整參數。</p>
+    </aside>
+  </div>
+
+  <section class="abm" id="tab-abm" role="tabpanel" aria-labelledby="tab-btn-abm" hidden>
+    <div class="mapcol">
+      <div class="citybox"><canvas id="city" role="img" aria-label="城市個體模擬：每個點是一位居民"></canvas></div>
+      <div class="transport">
+        <button class="btn primary" id="abm-play">❚❚ 暫停</button>
+        <button class="btn" id="abm-restart">重新開始</button>
+        <label class="topn" for="abm-speed" style="margin-left:0">速度
+          <select id="abm-speed" class="btn"><option value="1">慢</option><option value="3" selected>中</option><option value="8">快</option></select></label>
+        <span class="note"><span class="dot" style="background:var(--muted)"></span>易感<span class="dot" style="background:var(--event)"></span>潛伏<span class="dot" style="background:var(--infect)"></span>具傳染力<span class="dot" style="background:var(--obs)"></span>康復</span>
+      </div>
+      <p class="note">示意用的個體模擬，參數沒有用真實資料校準；潛伏期 3 天、傳染期 4.5 天與全球模型相同。白天居民前往商辦區、工業區或市場，晚上回家；約 1% 的人每天會去機場搭機離開，若已感染，就是「帶出城的感染者」，也就是全球模型裡沿航線擴散的那一步。每次「重新開始」的隨機結果都不同。</p>
+    </div>
+    <aside>
+      <section class="card" aria-labelledby="h-abm-now">
+        <h2 id="h-abm-now">城市狀況（2,500 位居民）</h2>
+        <div class="stats">
+          <div class="stat"><div class="v" id="a-day">第 0 天</div><div class="l">模擬時間</div></div>
+          <div class="stat"><div class="v" id="a-exp">0</div><div class="l">帶出城的感染者</div></div>
+          <div class="stat"><div class="v" id="a-inf">0</div><div class="l">目前具傳染力</div></div>
+          <div class="stat"><div class="v" id="a-ever">0%</div><div class="l">累計曾被感染</div></div>
+        </div>
+        <svg id="abm-chart" aria-label="易感、潛伏、具傳染力、康復人數隨時間變化"></svg>
+      </section>
+      <section class="card" aria-labelledby="h-abm-ctl">
+        <h2 id="h-abm-ctl">防疫措施</h2>
+        <div class="ctl">
+          <label for="a-mask">口罩配戴率 <output id="o-mask">0%</output></label>
+          <input type="range" id="a-mask" min="0" max="1" step="0.05" value="0">
+          <div class="hint">假設口罩讓每次接觸的傳染機率減半（雙方都戴再減半）</div>
+        </div>
+        <div class="ctl">
+          <label for="a-dist">減少外出與保持距離 <output id="o-dist">0%</output></label>
+          <input type="range" id="a-dist" min="0" max="1" step="0.05" value="0">
+        </div>
+        <div class="ctl">
+          <label for="a-travel">每天搭機離開的居民 <output id="o-travel">1.0%</output></label>
+          <input type="range" id="a-travel" min="0" max="0.05" step="0.0025" value="0.01">
+        </div>
+        <div class="btnrow"><button class="btn" id="a-lock">立即封城</button></div>
+        <div class="note">封城：外出減少 70%，機場只剩 5% 航班，從下一天生效。試試在第 15 天和第 25 天封城，比較「帶出城的感染者」差多少。</div>
+      </section>
+    </aside>
+  </section>
+
+  <footer>
+    <p>模型：每個國家一組 SEIR（湖北獨立），國家之間以 OpenFlights 航線連動，納入武漢封城、各國 OxCGRT 防疫嚴格指數與入境管制；參數以 2020 年 1–4 月的 JHU 確診資料校準（最早 30 國首例日平均誤差 5.8 天）。</p>
+    <p>重要度 = 0.5 × 之後 14 天新增受感染國家數 + 0.3 × 人口規模 + 0.2 × 事件類型權重。模擬結果是情境推演，不是預測；4 月歐美封城後的趨平未完全重現。</p>
+    <p>資料：Johns Hopkins CSSE、WHO 情勢報告、Our World in Data、OpenFlights、Oxford COVID-19 Government Response Tracker、Natural Earth。</p>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+/*__SIM_CORE__*/
+</script>
+<script>
+/*__ABM_CORE__*/
+</script>
+<script>
+(function () {
+"use strict";
+const D = "__WEB_DATA__";
+const WORLD = "__WORLD__";
+if (!window.d3 || !window.topojson) {
+  document.getElementById("sel").innerHTML = '<span class="err">無法載入繪圖函式庫（d3）。請確認網路連線後重新整理。</span>';
+  return;
+}
+const n = D.nodes.length, T = D.T;
+const P0 = JSON.parse(JSON.stringify(D.params));
+const idx = Object.fromEntries(D.nodes.map((x, i) => [x.iso3, i]));
+const HUB = idx["CHN-HUB"], CHN = idx["CHN"];
+const t0 = Date.parse(D.start + "T00:00:00Z");
+const dstr = t => new Date(t0 + t * 864e5).toISOString().slice(0, 10);
+const md = t => dstr(t).slice(5).replace("-", "/");
+const dayOf = s => Math.round((Date.parse(s + "T00:00:00Z") - t0) / 864e5);
+const nm = i => D.nodes[i].zh || D.nodes[i].name;
+const fmt = v => v >= 1e6 ? (v / 1e6).toFixed(v >= 1e7 ? 0 : 1) + "M" : v >= 1e4 ? Math.round(v / 1e3) + "k" : Math.round(v).toLocaleString("en-US");
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const TYPES = [
+  ["first_case", "首例輸入"], ["continent_jump", "跨洲跳躍"], ["hub", "擴散樞紐"],
+  ["local_transmission_start", "本土傳播"], ["policy", "政策事件"],
+];
+const TYPE_COLOR = { first_case: "--muted", continent_jump: "--obs", hub: "--infect", local_transmission_start: "--event", policy: "--ink" };
+
+const state = { mode: "sim", t: dayOf("2020-02-26"), playing: false, topN: 20, sel: null, selEvent: null,
+  types: new Set(["first_case", "continent_jump", "hub", "policy"]) };
+
+/* ---------------- 情境參數 ---------------- */
+const ui = {
+  r0: { el: "p-r0", out: "o-r0", set: (P, v) => P.epidemiology.R0 = v, show: v => v.toFixed(1) },
+  k: { el: "p-k", out: "o-k", set: (P, v) => P.epidemiology.policy_effect_world = v, show: v => v.toFixed(2) },
+  lock: { el: "p-lock", out: "o-lock", set: (P, v) => { P.lockdown.wuhan_date = dstr(v); }, show: v => md(v) },  // 滑桿值是模擬日序
+  lockr: { el: "p-lockr", out: "o-lockr", set: (P, v) => P.lockdown.wuhan_travel_reduction = v, show: v => Math.round(v * 100) + "%" },
+  pax: { el: "p-pax", out: "o-pax", set: (P, v) => P.travel.passengers_per_route_per_day = P0.travel.passengers_per_route_per_day * v, show: v => Math.round(v * 100) + "%" },
+};
+let P = JSON.parse(JSON.stringify(P0));
+const scen = { origin: "CHN-HUB", intlCutDay: undefined, intlCutKeep: 0.5 };
+
+function initControls() {
+  const lockEl = document.getElementById("p-lock");
+  lockEl.min = dayOf("2020-01-05"); lockEl.max = dayOf("2020-02-29");
+  const sel = document.getElementById("p-origin");
+  const opts = D.nodes.map((x, i) => [i, nm(i)]).filter(([i]) => D.nodes[i].lat !== null).sort((a, b) => a[1].localeCompare(b[1], "zh-Hant"));
+  sel.innerHTML = opts.map(([i, s]) => `<option value="${D.nodes[i].iso3}">${s}</option>`).join("");
+  resetControls();
+  for (const [key, u] of Object.entries(ui)) {
+    document.getElementById(u.el).addEventListener("input", e => {
+      const v = +e.target.value; u.set(P, v); document.getElementById(u.out).textContent = u.show(v); schedule();
+    });
+  }
+  const cutOn = document.getElementById("p-cut-on"), cut = document.getElementById("p-cut"), cutk = document.getElementById("p-cutk");
+  const syncCut = () => {
+    scen.intlCutDay = cutOn.checked ? +cut.value : undefined; scen.intlCutKeep = +cutk.value;
+    document.getElementById("o-cut").textContent = md(+cut.value);
+    document.getElementById("o-cutk").textContent = Math.round(cutk.value * 100) + "%";
+    cut.disabled = cutk.disabled = !cutOn.checked;
+  };
+  [cutOn, cut, cutk].forEach(el => el.addEventListener("input", () => { syncCut(); schedule(); }));
+  syncCut();
+  sel.addEventListener("change", () => { scen.origin = sel.value; schedule(); });
+  document.getElementById("reset").addEventListener("click", () => {
+    P = JSON.parse(JSON.stringify(P0)); scen.origin = "CHN-HUB"; cutOn.checked = false; syncCut(); resetControls(); schedule();
+  });
+}
+function resetControls() {
+  document.getElementById("p-r0").value = P0.epidemiology.R0;
+  document.getElementById("p-k").value = P0.epidemiology.policy_effect_world;
+  document.getElementById("p-lock").value = dayOf(P0.lockdown.wuhan_date);
+  document.getElementById("p-lockr").value = P0.lockdown.wuhan_travel_reduction;
+  document.getElementById("p-pax").value = 1;
+  document.getElementById("p-origin").value = "CHN-HUB";
+  document.getElementById("o-r0").textContent = (+P0.epidemiology.R0).toFixed(1);
+  document.getElementById("o-k").textContent = (+P0.epidemiology.policy_effect_world).toFixed(2);
+  document.getElementById("o-lock").textContent = md(dayOf(P0.lockdown.wuhan_date));
+  document.getElementById("o-lockr").textContent = Math.round(P0.lockdown.wuhan_travel_reduction * 100) + "%";
+  document.getElementById("o-pax").textContent = "100%";
+}
+
+/* ---------------- 模型執行與兩種資料來源 ---------------- */
+let base = null, sim = null, view = null, timer = null;
+function runSim(Pp, sc) {
+  const s = SimCore.simulate(D, Pp, sc);
+  const ms = SimCore.mainSources(s);
+  const first = Array.from(s.detect);
+  const src = ms.map((m, i) => (m && first[i] >= 0 && i !== s.origin) ? m.from : null);
+  const extra = [
+    { day: dayOf("2019-12-31"), node: HUB, type: "policy", desc: "WHO 接獲武漢不明原因肺炎群聚通報" },
+    { day: dayOf(Pp.lockdown.wuhan_date), node: HUB, type: "policy", desc: `武漢封城：湖北對外移動減少 ${Math.round(Pp.lockdown.wuhan_travel_reduction * 100)}%` },
+    ...D.globalEvents.map(g => ({ day: g.day, node: -1, type: "policy", desc: g.desc })),
+  ];
+  if (sc.intlCutDay !== undefined) extra.push({ day: sc.intlCutDay, node: -1, type: "policy", desc: `全球國際航班只保留 ${Math.round(sc.intlCutKeep * 100)}%（情境）` });
+  const events = SimCore.keyMoments(D, first, src, extra, { skip: [s.origin], origin: HUB });
+  // 每天中國以外的累計確診、全球累計感染
+  const outRep = new Float64Array(T), infCum = new Float64Array(T);
+  let acc = 0;
+  for (let t = 0; t < T; t++) {
+    let r = 0;
+    for (let x = 0; x < n; x++) { if (x !== HUB && x !== CHN) r += s.reported[t * n + x]; acc += s.newInf[t * n + x]; }
+    outRep[t] = r; infCum[t] = acc;
+  }
+  return { kind: "sim", s, first, src, share: ms.map(m => m ? m.share : null), events, outRep, infCum, origin: s.origin };
+}
+function realView() {
+  const first = D.nodes.map(x => x.obsFirst === null ? -1 : x.obsFirst);
+  first[HUB] = dayOf("2019-12-31");
+  const src = new Array(n).fill(null), share = new Array(n).fill(null), ev = new Array(n).fill(null);
+  for (const r of D.routesReal) { src[r.to] = r.from; share[r.to] = r.prob; ev[r.to] = r.ev; }
+  const extra = D.eventsReal.filter(e => e.type === "policy" || e.type === "local_transmission_start")
+    .map(e => ({ day: e.day, node: e.node, type: e.type, desc: (e.node >= 0 && e.node !== HUB ? nm(e.node) + "：" : "") + e.desc }));
+  extra.push({ day: dayOf("2019-12-31"), node: HUB, type: "policy", desc: "WHO 接獲武漢不明原因肺炎群聚通報" });
+  const events = SimCore.keyMoments(D, first, src, extra, { skip: [HUB], origin: HUB });
+  const outRep = new Float64Array(T);
+  for (let t = 0; t < T; t++) { const k = t - D.obsStart; outRep[t] = k >= 0 && D.obsOutside[k] !== null ? D.obsOutside[k] : NaN; }
+  return { kind: "real", first, src, share, evid: ev, events, outRep, infCum: null, origin: HUB };
+}
+function schedule() {
+  clearTimeout(timer);
+  timer = setTimeout(() => { sim = runSim(P, scen); if (state.mode === "sim") { view = sim; renderAll(); } }, 120);
+}
+
+/* ---------------- 地圖 ---------------- */
+const svg = d3.select("#map"), tip = document.getElementById("tip");
+const countries = topojson.feature(WORLD, WORLD.objects.countries).features;
+const kosovo = idx["XKS"];
+const featNode = f => {
+  if (f.properties.name === "Kosovo") return kosovo ?? -1;
+  if (f.id === "156") return CHN;
+  const i = D.nodes.findIndex(x => x.numeric === f.id);
+  return i;
+};
+countries.forEach(f => { f.node = featNode(f); });
+let W = 960, H = 500, proj, path;
+const gSphere = svg.append("path").attr("class", "sphere");
+const gGrat = svg.append("path").attr("class", "graticule");
+const gC = svg.append("g"), gArcOld = svg.append("g"), gArc = svg.append("g"), gPt = svg.append("g"), gFx = svg.append("g");
+function layout() {
+  W = document.getElementById("mapbox").clientWidth;
+  H = Math.round(W * 0.52);
+  svg.attr("viewBox", `0 0 ${W} ${H}`).attr("width", W).attr("height", H);
+  proj = d3.geoNaturalEarth1().fitExtent([[6, 6], [W - 6, H - 6]], { type: "Sphere" });
+  path = d3.geoPath(proj);
+  gSphere.attr("d", path({ type: "Sphere" })).attr("fill", "var(--ocean)");
+  gGrat.attr("d", path(d3.geoGraticule10()));
+  gC.selectAll("path").data(countries).join("path").attr("class", "country").attr("d", path)
+    .on("mousemove", (e, f) => hover(e, f.node)).on("mouseleave", () => tip.hidden = true)
+    .on("click", (e, f) => select(f.node >= 0 ? f.node : null));
+}
+const ll = i => { const x = D.nodes[i]; return x.lat === null ? null : proj([x.lon, x.lat]); };
+function intensity(t) {
+  // 每百萬人累計確診
+  const v = new Float64Array(n).fill(NaN);
+  if (view.kind === "sim") { for (let x = 0; x < n; x++) v[x] = view.s.reported[t * n + x] / D.nodes[x].N * 1e6; }
+  else { const k = t - D.obsStart; for (let x = 0; x < n; x++) { const c = k >= 0 ? D.obsCum[x][k] : 0; v[x] = (c ?? 0) / D.nodes[x].N * 1e6; } }
+  // 地圖上的中國包含湖北
+  const pc = view.kind === "sim" ? view.s.reported[t * n + CHN] + view.s.reported[t * n + HUB]
+    : (t >= D.obsStart ? (D.obsCum[CHN][t - D.obsStart] ?? 0) + (D.obsCum[HUB][t - D.obsStart] ?? 0) : 0);
+  v[CHN] = pc / (D.nodes[CHN].N + D.nodes[HUB].N) * 1e6;
+  return v;
+}
+let color;
+function renderMap() {
+  const t = state.t, v = intensity(t);
+  const land = css("--land"), hot = css("--infect");
+  color = d3.scaleSequentialLog(d3.interpolateRgb(d3.interpolateRgb(land, hot)(0.12), hot)).domain([0.05, 2000]).clamp(true);
+  gC.selectAll("path").attr("fill", f => {
+    const x = f.node; if (x < 0 || !(v[x] > 0)) return land;
+    return color(Math.max(v[x], 0.05));
+  }).classed("sel", f => f.node === state.sel);
+
+  // 擴散路線：近 7 天出現的（醒目）與較早的（淡）
+  const recent = [], old = [];
+  for (let i = 0; i < n; i++) {
+    const d = view.first[i], j = view.src[i];
+    if (d < 0 || d > t || j === null || j === undefined) continue;
+    (d > t - 7 ? recent : old).push([j, i, d]);
+  }
+  const line = ([j, i]) => { const a = D.nodes[j], b = D.nodes[i]; return a.lat === null || b.lat === null ? null : path({ type: "LineString", coordinates: [[a.lon, a.lat], [b.lon, b.lat]] }); };
+  const focus = state.sel;
+  gArcOld.selectAll("path").data(old, d => d[1]).join("path").attr("class", "arc").attr("d", line)
+    .attr("stroke", "var(--muted)").attr("stroke-opacity", d => focus !== null && (d[0] === focus || d[1] === focus) ? 0.9 : 0.22)
+    .attr("stroke-width", d => focus !== null && (d[0] === focus || d[1] === focus) ? 1.4 : 0.7);
+  gArc.selectAll("path").data(recent, d => d[1]).join("path").attr("class", "arc").attr("d", line)
+    .attr("stroke", "var(--infect)").attr("stroke-opacity", d => 0.95 - (t - d[2]) * 0.09).attr("stroke-width", 1.8);
+
+  // 擴散點
+  const pts = [];
+  for (let i = 0; i < n; i++) {
+    if (view.first[i] < 0 || view.first[i] > t || i === view.origin) continue;
+    const p = ll(i); if (!p) continue;
+    let c = view.kind === "sim" ? view.s.reported[t * n + i] : (t >= D.obsStart ? D.obsCum[i][t - D.obsStart] ?? 0 : 0);
+    pts.push({ i, p, r: 2.2 + 1.9 * Math.log10(1 + c), fresh: view.first[i] > t - 7 });
+  }
+  gPt.selectAll("circle").data(pts, d => d.i).join("circle").attr("class", "pt")
+    .attr("cx", d => d.p[0]).attr("cy", d => d.p[1]).attr("r", d => d.r)
+    .attr("fill", d => d.fresh ? "var(--infect)" : "var(--ink)").attr("fill-opacity", d => d.fresh ? 0.95 : 0.55)
+    .on("mousemove", (e, d) => hover(e, d.i)).on("mouseleave", () => tip.hidden = true).on("click", (e, d) => select(d.i));
+  // 起點與選取的事件
+  const o = ll(view.origin);
+  gFx.selectAll("*").remove();
+  if (o) {
+    gFx.append("path").attr("class", "origin").attr("transform", `translate(${o[0]},${o[1]})`).attr("d", d3.symbol(d3.symbolStar, 120)());
+  }
+  const ev = state.selEvent;
+  if (ev && ev.node >= 0 && Math.abs(ev.day - t) <= 10) {
+    const p = ll(ev.node);
+    if (p) gFx.append("circle").attr("class", "pulse").attr("cx", p[0]).attr("cy", p[1]).attr("r", 10);
+  }
+  renderLegend();
+}
+function renderLegend() {
+  const stops = d3.range(0, 1.01, 0.1).map(q => color(Math.exp(Math.log(0.05) + q * (Math.log(2000) - Math.log(0.05)))));
+  document.getElementById("legend").innerHTML =
+    `<div class="ramp"><span>每百萬人${view.kind === "sim" ? "模型" : ""}確診</span></div>
+     <div class="ramp"><span class="mono">0.1</span><span class="bar" style="background:linear-gradient(90deg,${stops.join(",")})"></span><span class="mono">1000+</span></div>
+     <div class="row"><svg width="22" height="8"><line x1="0" y1="4" x2="22" y2="4" stroke="var(--infect)" stroke-width="2"/></svg>近 7 天的擴散路線</div>
+     <div class="row"><svg width="22" height="8"><line x1="0" y1="4" x2="22" y2="4" stroke="var(--muted)" stroke-width="1" stroke-opacity=".5"/></svg>較早的擴散路線</div>`;
+}
+function hover(e, i) {
+  if (i === null || i < 0) { tip.hidden = true; return; }
+  const box = document.getElementById("mapbox").getBoundingClientRect();
+  const f = view.first[i];
+  tip.innerHTML = `<b>${nm(i)}</b>${D.nodes[i].zh ? ` <span class="mono" style="color:var(--muted)">${D.nodes[i].iso3}</span>` : ""}<br>
+    首例：<span class="mono">${f >= 0 ? dstr(f) : "—"}</span>${view.src[i] !== null && view.src[i] !== undefined ? `<br>推定來源：${nm(view.src[i])}` : ""}`;
+  tip.hidden = false;
+  const x = e.clientX - box.left + 14, y = e.clientY - box.top + 12;
+  tip.style.left = Math.min(x, box.width - 220) + "px"; tip.style.top = Math.min(y, box.height - 70) + "px";
+}
+
+/* ---------------- 選取國家 ---------------- */
+function chainOf(i) {
+  const seen = new Set([i]), out = [i];
+  let c = i;
+  while (view.src[c] !== null && view.src[c] !== undefined && !seen.has(view.src[c])) { c = view.src[c]; seen.add(c); out.push(c); if (c === view.origin) break; }
+  return out;
+}
+function select(i) { state.sel = i; renderSel(); renderMap(); }
+function renderSel() {
+  const el = document.getElementById("sel"), i = state.sel;
+  if (i === null || i === undefined) { el.innerHTML = "點地圖上的國家或擴散點，查看它的首例日與感染來源鏈。"; return; }
+  const x = D.nodes[i], f = view.first[i], obs = x.obsFirst;
+  const chain = chainOf(i).map(nm);
+  const t = state.t;
+  let rows = `<dt>首例（${view.kind === "sim" ? "模型" : "真實"}）</dt><dd>${f >= 0 ? dstr(f) : "未出現"}</dd>`;
+  if (view.kind === "sim") {
+    rows += `<dt>首例（真實）</dt><dd>${obs !== null ? dstr(obs) : "—"}${f >= 0 && obs !== null ? `（模型${f - obs >= 0 ? "晚" : "早"} ${Math.abs(f - obs)} 天）` : ""}</dd>`;
+    const s = view.s;
+    rows += `<dt>${md(t)} 累計確診</dt><dd>${fmt(s.reported[t * n + i])}（模型）</dd>`;
+    let inf = 0; for (let q = 0; q <= t; q++) inf += s.newInf[q * n + i] + s.imports[q * n + i];
+    rows += `<dt>${md(t)} 實際感染</dt><dd>${fmt(inf)}（模型估計）</dd>`;
+  } else {
+    const k = t - D.obsStart, c = k >= 0 ? D.obsCum[i][k] : null;
+    rows += `<dt>${md(t)} 累計確診</dt><dd>${c === null || c === undefined ? "—" : fmt(c)}</dd>`;
+  }
+  const sh = view.share[i];
+  if (view.src[i] !== null && view.src[i] !== undefined) rows += `<dt>推定來源</dt><dd>${nm(view.src[i])}${sh !== null && sh !== undefined ? `（${Math.round(sh * 100)}%）` : (view.evid && view.evid[i] === "nearest_infected" ? "（最近已感染地區）" : "")}</dd>`;
+  el.innerHTML = `<div class="sel-name">${nm(i)} <span class="mono" style="color:var(--muted);font-size:12px;font-weight:400">${x.name}</span></div>
+    <dl class="kv">${rows}</dl>
+    <div class="chain">來源鏈：${chain.map((c, q) => q === 0 ? `<b>${c}</b>` : c).join(" ← ")}</div>`;
+}
+
+/* ---------------- 時間軸與事件 ---------------- */
+const tl = d3.select("#tl");
+let tlX, tlW = 1;
+function visibleEvents() {
+  const ev = view.events.filter(e => state.types.has(e.type));
+  const top = [...ev].sort((a, b) => b.score - a.score).slice(0, state.topN);
+  return top.sort((a, b) => a.day - b.day);
+}
+function renderTimeline() {
+  const w = document.getElementById("tl").clientWidth || 600, h = 92, m = { l: 12, r: 12 };
+  tlW = w;
+  tl.attr("viewBox", `0 0 ${w} ${h}`);
+  tlX = d3.scaleLinear().domain([0, T - 1]).range([m.l, w - m.r]);
+  tl.selectAll("*").remove();
+  const months = d3.range(0, T).filter(t => dstr(t).endsWith("-01"));
+  tl.append("line").attr("class", "axis").attr("x1", tlX(0)).attr("x2", tlX(T - 1)).attr("y1", 70).attr("y2", 70);
+  tl.selectAll("g.m").data(months).join("g").attr("class", "m").call(g => {
+    g.append("line").attr("class", "axis").attr("x1", d => tlX(d)).attr("x2", d => tlX(d)).attr("y1", 66).attr("y2", 74);
+    g.append("text").attr("x", d => tlX(d) + 3).attr("y", 86).text(d => dstr(d).slice(0, 7));
+  });
+  // 每日新增出現病例的國家數（背景直條）
+  const counts = new Array(T).fill(0);
+  view.first.forEach((d, i) => { if (d >= 0 && d < T && i !== view.origin) counts[d]++; });
+  const cmax = Math.max(1, ...counts), bw = Math.max(1, (w - m.l - m.r) / T - 0.5);
+  tl.append("g").selectAll("rect").data(counts).join("rect").attr("class", "gm")
+    .attr("x", (c, t) => tlX(t) - bw / 2).attr("width", bw).attr("y", c => 66 - 22 * c / cmax).attr("height", c => 22 * c / cmax);
+  const ev = visibleEvents(), sMax = Math.max(...ev.map(e => e.score), 0.01);
+  // 避免重疊：同一天附近的事件往上排
+  const lanes = [];
+  const placed = ev.map(e => {
+    const x = tlX(e.day); let lane = 0;
+    while (lanes[lane] !== undefined && x - lanes[lane] < 11) lane++;
+    lanes[lane] = x; return { e, x, y: 36 - lane * 11 };
+  });
+  tl.append("g").selectAll("path").data(placed).join("path")
+    .attr("transform", d => `translate(${d.x},${Math.max(d.y, 6)}) rotate(45)`)
+    .attr("d", d => { const s = 3 + 3.5 * d.e.score / sMax; return `M${-s},${-s}h${2 * s}v${2 * s}h${-2 * s}z`; })
+    .attr("fill", d => `var(${TYPE_COLOR[d.e.type]})`).attr("stroke", d => d.e === state.selEvent ? "var(--ink)" : "var(--panel)").attr("stroke-width", d => d.e === state.selEvent ? 2 : 1)
+    .style("cursor", "pointer").on("click", (e, d) => { e.stopPropagation(); pickEvent(d.e); })
+    .append("title").text(d => `${dstr(d.e.day)} ${evText(d.e)}`);
+  tl.append("line").attr("class", "cursor").attr("x1", tlX(state.t)).attr("x2", tlX(state.t)).attr("y1", 2).attr("y2", 76);
+}
+function evText(e) {
+  if (e.desc) return e.desc;
+  if (e.type === "first_case") return `${nm(e.node)} 首例${e.src !== null && e.src !== undefined ? `，推定來自${nm(e.src)}` : ""}`;
+  return nm(e.node);
+}
+function renderEvents() {
+  const ev = visibleEvents(), sMax = Math.max(...ev.map(e => e.score), 0.01);
+  const label = Object.fromEntries(TYPES);
+  document.getElementById("events").innerHTML = `<table><thead><tr><th>日期</th><th>類型</th><th>事件</th><th>重要度</th></tr></thead><tbody>${
+    ev.map((e, q) => `<tr data-q="${q}" class="${e === state.selEvent ? "on" : ""}"><td class="mono">${dstr(e.day)}</td><td><span class="chip" style="pointer-events:none"><i style="background:var(${TYPE_COLOR[e.type]})"></i>${label[e.type]}</span></td><td>${evText(e)}${e.down ? `<span class="note">　之後 14 天新增 ${e.down} 國</span>` : ""}</td><td class="score"><span style="width:${Math.round(100 * e.score / sMax)}%"></span></td></tr>`).join("")
+  }</tbody></table>`;
+  document.querySelectorAll("#events tr[data-q]").forEach(tr => tr.addEventListener("click", () => pickEvent(ev[+tr.dataset.q])));
+}
+function pickEvent(e) {
+  state.selEvent = e; state.t = e.day; if (e.node >= 0) state.sel = e.node;
+  renderAll();
+}
+function tlScrub(ev) {
+  const r = document.getElementById("tl").getBoundingClientRect();
+  const t = Math.round(tlX.invert((ev.clientX - r.left) * tlW / r.width));
+  setDay(Math.min(Math.max(t, 0), T - 1));
+}
+const tlEl = document.getElementById("tl");
+let drag = false;
+tlEl.addEventListener("pointerdown", e => { drag = true; tlEl.setPointerCapture(e.pointerId); tlScrub(e); });
+tlEl.addEventListener("pointermove", e => { if (drag) tlScrub(e); });
+tlEl.addEventListener("pointerup", () => { drag = false; });
+tlEl.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight") { setDay(Math.min(state.t + 1, T - 1)); e.preventDefault(); }
+  if (e.key === "ArrowLeft") { setDay(Math.max(state.t - 1, 0)); e.preventDefault(); }
+});
+
+/* ---------------- 曲線與概況 ---------------- */
+function renderChart() {
+  const el = document.getElementById("chart"), w = el.clientWidth || 300, h = 170, m = { l: 34, r: 8, t: 8, b: 18 };
+  const c = d3.select(el).attr("viewBox", `0 0 ${w} ${h}`);
+  c.selectAll("*").remove();
+  const t1 = dayOf("2020-01-20");
+  const x = d3.scaleLinear().domain([t1, T - 1]).range([m.l, w - m.r]);
+  const y = d3.scaleLog().domain([1, 1e7]).range([h - m.b, m.t]).clamp(true);
+  [1, 1e2, 1e4, 1e6].forEach(v => {
+    c.append("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y(v)).attr("y2", y(v)).attr("stroke", "var(--rule)");
+    c.append("text").attr("x", m.l - 4).attr("y", y(v) + 3).attr("text-anchor", "end").text(v >= 1e6 ? "1M" : v >= 1e4 ? "10k" : v);
+  });
+  ["2020-02-01", "2020-03-01", "2020-04-01"].forEach(s => c.append("text").attr("x", x(dayOf(s))).attr("y", h - 4).attr("text-anchor", "middle").text(s.slice(5).replace("-", "/")));
+  const ln = (arr, from) => d3.line().defined(d => d[1] >= 1 && Number.isFinite(d[1])).x(d => x(d[0])).y(d => y(d[1]))(
+    d3.range(from, T).map(t => [t, arr[t]]));
+  const obs = realView.cache || (realView.cache = realView());
+  c.append("path").attr("d", ln(obs.outRep, t1)).attr("fill", "none").attr("stroke", "var(--obs)").attr("stroke-width", 2);
+  if (state.mode === "sim") {
+    if (base && !sameAsBase()) c.append("path").attr("d", ln(base.outRep, t1)).attr("fill", "none").attr("stroke", "var(--muted)").attr("stroke-dasharray", "3 3").attr("stroke-width", 1.2);
+    c.append("path").attr("d", ln(view.outRep, t1)).attr("fill", "none").attr("stroke", "var(--infect)").attr("stroke-width", 2);
+  }
+  c.append("line").attr("x1", x(Math.max(state.t, t1))).attr("x2", x(Math.max(state.t, t1))).attr("y1", m.t).attr("y2", h - m.b).attr("stroke", "var(--ink)").attr("stroke-opacity", 0.5);
+  document.getElementById("chart-note").innerHTML = state.mode === "sim"
+    ? `<span style="color:var(--infect)">━</span> 模型　<span style="color:var(--obs)">━</span> 真實（JHU）${base && !sameAsBase() ? `　<span style="color:var(--muted)">┅</span> 校準基準` : ""}　中國以外累計確診，對數刻度`
+    : `<span style="color:var(--obs)">━</span> 真實（JHU）中國以外累計確診，對數刻度`;
+}
+function sameAsBase() { return JSON.stringify(P) === JSON.stringify(P0) && scen.origin === "CHN-HUB" && scen.intlCutDay === undefined; }
+function reachedBy(v, t) { let c = 0; v.first.forEach((d, i) => { if (d >= 0 && d <= t && i !== v.origin) c++; }); return c; }
+function renderStats() {
+  const t = state.t;
+  document.getElementById("s-count").textContent = reachedBy(view, t);
+  const r = view.outRep[t];
+  document.getElementById("s-rep").textContent = Number.isFinite(r) ? fmt(r) : "—";
+  document.getElementById("s-inf").textContent = view.infCum ? fmt(view.infCum[t]) : "—";
+  const show = state.mode === "sim" && base && !sameAsBase();
+  const dl = (id, a, b, f) => {
+    const el = document.getElementById(id);
+    if (!show) { el.textContent = ""; return; }
+    const d = a - b; el.className = "delta " + (d > 0 ? "up" : d < 0 ? "down" : "");
+    el.textContent = `基準 ${f(b)}`;
+  };
+  dl("d-count", reachedBy(view, t), reachedBy(base, t), v => v);
+  dl("d-rep", view.outRep[t], base.outRep[t], fmt);
+  dl("d-inf", view.infCum ? view.infCum[t] : 0, base.infCum[t], fmt);
+  // 情境比較摘要
+  const cmp = document.getElementById("compare");
+  if (!show) { cmp.innerHTML = `<div class="note">目前是校準後的基準情境。調整任一參數後，這裡會比較情境與基準。</div>`; return; }
+  const d331 = dayOf("2020-03-31"), last = T - 1;
+  const delayOf = v => { const a = []; for (let i = 0; i < n; i++) if (i !== v.origin && base.first[i] >= 0 && v.first[i] >= 0) a.push(v.first[i] - base.first[i]); return a.length ? d3.median(a) : 0; };
+  const md2 = delayOf(view);
+  cmp.innerHTML = `
+    <div><span>3/31 前出現病例的國家</span><span class="mono">${reachedBy(base, d331)} → ${reachedBy(view, d331)}</span></div>
+    <div><span>4/30 全球累計感染</span><span class="mono">${fmt(base.infCum[last])} → ${fmt(view.infCum[last])}</span></div>
+    <div><span>各國首例日（中位數）</span><span class="mono">${md2 === 0 ? "不變" : (md2 > 0 ? "延後 " : "提早 ") + Math.abs(md2) + " 天"}</span></div>`;
+}
+
+/* ---------------- 共用 ---------------- */
+function setDay(t) { state.t = t; renderFrame(); }
+function renderFrame() {
+  document.getElementById("date").textContent = dstr(state.t);
+  document.getElementById("dayno").textContent = `第 ${state.t + 1} 天（${view.kind === "sim" ? "模擬" : "真實資料"}）`;
+  renderMap(); renderStats(); renderChart(); renderSel();
+  tl.select(".cursor").attr("x1", tlX(state.t)).attr("x2", tlX(state.t));
+}
+function renderAll() { renderTimeline(); renderEvents(); renderFrame(); }
+function initChips() {
+  const box = document.getElementById("chips");
+  box.innerHTML = TYPES.map(([k, s]) => `<button class="chip" data-k="${k}" aria-pressed="${state.types.has(k)}"><i style="background:var(${TYPE_COLOR[k]})"></i>${s}</button>`).join("");
+  box.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+    const k = b.dataset.k; state.types.has(k) ? state.types.delete(k) : state.types.add(k);
+    b.setAttribute("aria-pressed", state.types.has(k)); renderTimeline(); renderEvents();
+  }));
+  const tn = document.getElementById("topn");
+  tn.addEventListener("input", () => { state.topN = +tn.value; document.getElementById("topn-v").textContent = tn.value; renderTimeline(); renderEvents(); });
+}
+function setMode(m) {
+  state.mode = m;
+  document.getElementById("m-sim").setAttribute("aria-pressed", m === "sim");
+  document.getElementById("m-real").setAttribute("aria-pressed", m === "real");
+  document.getElementById("controls").hidden = m !== "sim";
+  document.getElementById("real-note").hidden = m === "sim";
+  document.getElementById("s-inf").parentElement.hidden = m !== "sim";
+  view = m === "sim" ? sim : (realView.cache || (realView.cache = realView()));
+  renderAll();
+}
+let playTimer = null;
+function togglePlay() {
+  state.playing = !state.playing;
+  const b = document.getElementById("play");
+  b.textContent = state.playing ? "❚❚ 暫停" : "▶ 播放"; b.setAttribute("aria-label", state.playing ? "暫停" : "播放");
+  clearInterval(playTimer);
+  if (state.playing) {
+    if (state.t >= T - 1) state.t = dayOf("2020-01-10");
+    playTimer = setInterval(() => { if (state.t >= T - 1) { togglePlay(); return; } setDay(state.t + 1); }, 140);
+  }
+}
+
+initControls(); initChips();
+base = runSim(P0, { origin: "CHN-HUB" });
+sim = base; view = sim;
+layout();
+renderAll();
+document.getElementById("m-sim").addEventListener("click", () => setMode("sim"));
+document.getElementById("m-real").addEventListener("click", () => setMode("real"));
+document.getElementById("play").addEventListener("click", togglePlay);
+let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { if (!document.getElementById("tab-global").hidden) { layout(); renderAll(); } }, 150); });
+window.__showGlobal = () => { layout(); renderAll(); };
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => renderFrame());
+})();
+</script>
+<script>
+/*__ABM_UI__*/
+</script>
+<script>
+(function () {
+  const tabs = [["tab-btn-global", "tab-global"], ["tab-btn-abm", "tab-abm"]];
+  function show(which) {
+    for (const [b, p] of tabs) {
+      const on = p === which;
+      document.getElementById(b).setAttribute("aria-selected", on);
+      document.getElementById(p).hidden = !on;
+    }
+    document.querySelectorAll(".g-only").forEach(el => { el.hidden = which !== "tab-global"; });
+    if (which === "tab-global" && window.__showGlobal) window.__showGlobal();
+    if (which === "tab-abm" && window.__showAbm) window.__showAbm();
+  }
+  for (const [b, p] of tabs) document.getElementById(b).addEventListener("click", () => show(p));
+  if (location.hash === "#city") show("tab-abm");
+})();
+</script>

@@ -1,0 +1,9 @@
+pandas>=2.0
+numpy
+requests
+pdfplumber
+pycountry
+matplotlib
+plotly            # 只有 app/first_case_map.py 需要
+pyyaml
+pytest

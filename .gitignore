@@ -1,0 +1,10 @@
+# 原始資料（約 224 MB）可用 scraper/download_data.py 重新下載；只保留下載紀錄
+data/raw/*
+!data/raw/manifest.csv
+
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,362 @@
+date,iso3,event_type,sitrep,total_confirmed,note
+2020-01-20,CHN,first_reported_by_who,1,278,首次出現在 WHO 第 1 期報告
+2020-01-20,JPN,first_reported_by_who,1,1,首次出現在 WHO 第 1 期報告
+2020-01-20,KOR,first_reported_by_who,1,1,首次出現在 WHO 第 1 期報告
+2020-01-20,THA,first_reported_by_who,1,2,首次出現在 WHO 第 1 期報告
+2020-01-23,MAC,first_reported_by_who,3,1,首次出現在 WHO 第 3 期報告
+2020-01-23,TWN,first_reported_by_who,3,1,首次出現在 WHO 第 3 期報告
+2020-01-23,USA,first_reported_by_who,3,1,首次出現在 WHO 第 3 期報告
+2020-01-24,SGP,first_reported_by_who,4,1,首次出現在 WHO 第 4 期報告
+2020-01-24,VNM,first_reported_by_who,4,2,首次出現在 WHO 第 4 期報告
+2020-01-25,AUS,first_reported_by_who,5,3,首次出現在 WHO 第 5 期報告
+2020-01-25,FRA,first_reported_by_who,5,3,首次出現在 WHO 第 5 期報告
+2020-01-26,MYS,first_reported_by_who,6,3,首次出現在 WHO 第 6 期報告
+2020-01-26,NPL,first_reported_by_who,6,1,首次出現在 WHO 第 6 期報告
+2020-01-27,CAN,first_reported_by_who,7,1,首次出現在 WHO 第 7 期報告
+2020-01-28,DEU,first_reported_by_who,8,1,首次出現在 WHO 第 8 期報告
+2020-01-28,KHM,first_reported_by_who,8,1,首次出現在 WHO 第 8 期報告
+2020-01-28,LKA,first_reported_by_who,8,1,首次出現在 WHO 第 8 期報告
+2020-01-29,ARE,first_reported_by_who,9,4,首次出現在 WHO 第 9 期報告
+2020-01-30,FIN,first_reported_by_who,10,1,首次出現在 WHO 第 10 期報告
+2020-01-30,IND,first_reported_by_who,10,1,首次出現在 WHO 第 10 期報告
+2020-01-30,PHL,first_reported_by_who,10,1,首次出現在 WHO 第 10 期報告
+2020-01-31,ITA,first_reported_by_who,11,2,首次出現在 WHO 第 11 期報告
+2020-02-01,ESP,first_reported_by_who,12,1,首次出現在 WHO 第 12 期報告
+2020-02-01,GBR,first_reported_by_who,12,2,首次出現在 WHO 第 12 期報告
+2020-02-01,RUS,first_reported_by_who,12,2,首次出現在 WHO 第 12 期報告
+2020-02-01,SWE,first_reported_by_who,12,1,首次出現在 WHO 第 12 期報告
+2020-02-05,BEL,first_reported_by_who,16,1,首次出現在 WHO 第 16 期報告
+2020-02-19,EGY,first_reported_by_who,30,1,首次出現在 WHO 第 30 期報告
+2020-02-20,DIAMOND_PRINCESS,first_reported_by_who,31,621,首次出現在 WHO 第 31 期報告
+2020-02-21,IRN,first_reported_by_who,32,5,首次出現在 WHO 第 32 期報告
+2020-02-22,ISR,first_reported_by_who,33,1,首次出現在 WHO 第 33 期報告
+2020-02-22,LBN,first_reported_by_who,33,1,首次出現在 WHO 第 33 期報告
+2020-02-24,KWT,first_reported_by_who,35,3,首次出現在 WHO 第 35 期報告
+2020-02-25,AFG,first_reported_by_who,36,1,首次出現在 WHO 第 36 期報告
+2020-02-25,BHR,first_reported_by_who,36,8,首次出現在 WHO 第 36 期報告
+2020-02-25,IRQ,first_reported_by_who,36,1,首次出現在 WHO 第 36 期報告
+2020-02-25,OMN,first_reported_by_who,36,2,首次出現在 WHO 第 36 期報告
+2020-02-26,AUT,first_reported_by_who,37,2,首次出現在 WHO 第 37 期報告
+2020-02-26,CHE,first_reported_by_who,37,1,首次出現在 WHO 第 37 期報告
+2020-02-26,DZA,first_reported_by_who,37,1,首次出現在 WHO 第 37 期報告
+2020-02-26,HRV,first_reported_by_who,37,2,首次出現在 WHO 第 37 期報告
+2020-02-27,BLR,first_reported_by_who,39,1,首次出現在 WHO 第 39 期報告
+2020-02-27,BRA,first_reported_by_who,38,1,首次出現在 WHO 第 38 期報告
+2020-02-27,DNK,first_reported_by_who,38,1,首次出現在 WHO 第 38 期報告
+2020-02-27,EST,first_reported_by_who,38,1,首次出現在 WHO 第 38 期報告
+2020-02-27,GEO,first_reported_by_who,38,1,首次出現在 WHO 第 38 期報告
+2020-02-27,GRC,first_reported_by_who,38,1,首次出現在 WHO 第 38 期報告
+2020-02-27,LTU,first_reported_by_who,39,1,首次出現在 WHO 第 39 期報告
+2020-02-27,MKD,first_reported_by_who,38,1,首次出現在 WHO 第 38 期報告
+2020-02-27,NGA,first_reported_by_who,39,1,首次出現在 WHO 第 39 期報告
+2020-02-27,NLD,first_reported_by_who,39,1,首次出現在 WHO 第 39 期報告
+2020-02-27,NOR,first_reported_by_who,38,1,首次出現在 WHO 第 38 期報告
+2020-02-27,NZL,first_reported_by_who,39,1,首次出現在 WHO 第 39 期報告
+2020-02-27,PAK,first_reported_by_who,38,2,首次出現在 WHO 第 38 期報告
+2020-02-27,ROU,first_reported_by_who,38,1,首次出現在 WHO 第 38 期報告
+2020-02-27,ARE,local_transmission_start,39,19,WHO 分類由境外移入轉為本土傳播
+2020-02-27,AUS,local_transmission_start,39,23,WHO 分類由境外移入轉為本土傳播
+2020-02-27,DEU,local_transmission_start,39,26,WHO 分類由境外移入轉為本土傳播
+2020-02-27,ESP,local_transmission_start,39,25,WHO 分類由境外移入轉為本土傳播
+2020-02-27,FRA,local_transmission_start,39,38,WHO 分類由境外移入轉為本土傳播
+2020-02-27,GBR,local_transmission_start,39,16,WHO 分類由境外移入轉為本土傳播
+2020-02-27,HRV,local_transmission_start,39,3,WHO 分類由境外移入轉為本土傳播
+2020-02-27,IRN,local_transmission_start,39,245,WHO 分類由境外移入轉為本土傳播
+2020-02-27,ITA,local_transmission_start,39,650,WHO 分類由境外移入轉為本土傳播
+2020-02-27,JPN,local_transmission_start,39,210,WHO 分類由境外移入轉為本土傳播
+2020-02-27,KOR,local_transmission_start,39,2337,WHO 分類由境外移入轉為本土傳播
+2020-02-27,MYS,local_transmission_start,39,24,WHO 分類由境外移入轉為本土傳播
+2020-02-27,SGP,local_transmission_start,39,96,WHO 分類由境外移入轉為本土傳播
+2020-02-27,THA,local_transmission_start,39,40,WHO 分類由境外移入轉為本土傳播
+2020-02-27,USA,local_transmission_start,39,59,WHO 分類由境外移入轉為本土傳播
+2020-02-27,VNM,local_transmission_start,39,16,WHO 分類由境外移入轉為本土傳播
+2020-02-29,MEX,first_reported_by_who,40,2,首次出現在 WHO 第 40 期報告
+2020-02-29,SMR,first_reported_by_who,40,1,首次出現在 WHO 第 40 期報告
+2020-02-29,DIAMOND_PRINCESS,local_transmission_start,40,705,WHO 分類由境外移入轉為本土傳播
+2020-02-29,SMR,local_transmission_start,40,1,WHO 分類由境外移入轉為本土傳播
+2020-03-01,AZE,first_reported_by_who,41,3,首次出現在 WHO 第 41 期報告
+2020-03-01,ECU,first_reported_by_who,41,1,首次出現在 WHO 第 41 期報告
+2020-03-01,IRL,first_reported_by_who,41,1,首次出現在 WHO 第 41 期報告
+2020-03-01,MCO,first_reported_by_who,41,1,首次出現在 WHO 第 41 期報告
+2020-03-01,QAT,first_reported_by_who,41,1,首次出現在 WHO 第 41 期報告
+2020-03-01,CAN,local_transmission_start,41,19,WHO 分類由境外移入轉為本土傳播
+2020-03-01,NLD,local_transmission_start,41,7,WHO 分類由境外移入轉為本土傳播
+2020-03-01,NOR,local_transmission_start,41,15,WHO 分類由境外移入轉為本土傳播
+2020-03-02,ARM,first_reported_by_who,42,1,首次出現在 WHO 第 42 期報告
+2020-03-02,CZE,first_reported_by_who,42,3,首次出現在 WHO 第 42 期報告
+2020-03-02,DOM,first_reported_by_who,42,1,首次出現在 WHO 第 42 期報告
+2020-03-02,IDN,first_reported_by_who,42,2,首次出現在 WHO 第 42 期報告
+2020-03-02,ISL,first_reported_by_who,42,2,首次出現在 WHO 第 42 期報告
+2020-03-02,LUX,first_reported_by_who,42,1,首次出現在 WHO 第 42 期報告
+2020-03-02,CHE,local_transmission_start,42,24,WHO 分類由境外移入轉為本土傳播
+2020-03-02,DNK,local_transmission_start,42,4,WHO 分類由境外移入轉為本土傳播
+2020-03-02,FIN,local_transmission_start,42,6,WHO 分類由境外移入轉為本土傳播
+2020-03-02,GRC,local_transmission_start,42,7,WHO 分類由境外移入轉為本土傳播
+2020-03-02,IDN,local_transmission_start,42,2,WHO 分類由境外移入轉為本土傳播
+2020-03-02,ISR,local_transmission_start,42,7,WHO 分類由境外移入轉為本土傳播
+2020-03-02,SWE,local_transmission_start,42,14,WHO 分類由境外移入轉為本土傳播
+2020-03-03,AND,first_reported_by_who,43,1,首次出現在 WHO 第 43 期報告
+2020-03-03,JOR,first_reported_by_who,43,1,首次出現在 WHO 第 43 期報告
+2020-03-03,LVA,first_reported_by_who,43,1,首次出現在 WHO 第 43 期報告
+2020-03-03,MAR,first_reported_by_who,43,1,首次出現在 WHO 第 43 期報告
+2020-03-03,PRT,first_reported_by_who,43,2,首次出現在 WHO 第 43 期報告
+2020-03-03,SAU,first_reported_by_who,43,1,首次出現在 WHO 第 43 期報告
+2020-03-03,SEN,first_reported_by_who,43,1,首次出現在 WHO 第 43 期報告
+2020-03-03,TUN,first_reported_by_who,43,1,首次出現在 WHO 第 43 期報告
+2020-03-03,DZA,local_transmission_start,43,5,WHO 分類由境外移入轉為本土傳播
+2020-03-03,ECU,local_transmission_start,43,6,WHO 分類由境外移入轉為本土傳播
+2020-03-03,LBN,local_transmission_start,43,13,WHO 分類由境外移入轉為本土傳播
+2020-03-04,ARG,first_reported_by_who,44,1,首次出現在 WHO 第 44 期報告
+2020-03-04,CHL,first_reported_by_who,44,1,首次出現在 WHO 第 44 期報告
+2020-03-04,POL,first_reported_by_who,44,1,首次出現在 WHO 第 44 期報告
+2020-03-04,UKR,first_reported_by_who,44,1,首次出現在 WHO 第 44 期報告
+2020-03-04,ROU,local_transmission_start,44,4,WHO 分類由境外移入轉為本土傳播
+2020-03-05,BLM,first_reported_by_who,45,1,首次出現在 WHO 第 45 期報告
+2020-03-05,GIB,first_reported_by_who,45,1,首次出現在 WHO 第 45 期報告
+2020-03-05,HUN,first_reported_by_who,45,2,首次出現在 WHO 第 45 期報告
+2020-03-05,LIE,first_reported_by_who,45,1,首次出現在 WHO 第 45 期報告
+2020-03-05,MAF,first_reported_by_who,45,2,首次出現在 WHO 第 45 期報告
+2020-03-05,SVN,first_reported_by_who,45,1,首次出現在 WHO 第 45 期報告
+2020-03-05,BEL,local_transmission_start,45,23,WHO 分類由境外移入轉為本土傳播
+2020-03-05,BLR,local_transmission_start,45,6,WHO 分類由境外移入轉為本土傳播
+2020-03-05,IND,local_transmission_start,45,29,WHO 分類由境外移入轉為本土傳播
+2020-03-05,PRT,local_transmission_start,45,7,WHO 分類由境外移入轉為本土傳播
+2020-03-06,BTN,first_reported_by_who,46,1,首次出現在 WHO 第 46 期報告
+2020-03-06,CMR,first_reported_by_who,46,1,首次出現在 WHO 第 46 期報告
+2020-03-06,SRB,first_reported_by_who,46,1,首次出現在 WHO 第 46 期報告
+2020-03-06,ZAF,first_reported_by_who,46,1,首次出現在 WHO 第 46 期報告
+2020-03-06,CZE,local_transmission_start,46,12,WHO 分類由境外移入轉為本土傳播
+2020-03-06,IRL,local_transmission_start,46,14,WHO 分類由境外移入轉為本土傳播
+2020-03-06,NZL,local_transmission_start,46,4,WHO 分類由境外移入轉為本土傳播
+2020-03-06,PHL,local_transmission_start,46,5,WHO 分類由境外移入轉為本土傳播
+2020-03-06,SVN,local_transmission_start,46,6,WHO 分類由境外移入轉為本土傳播
+2020-03-07,COL,first_reported_by_who,47,1,首次出現在 WHO 第 47 期報告
+2020-03-07,PER,first_reported_by_who,47,1,首次出現在 WHO 第 47 期報告
+2020-03-07,SVK,first_reported_by_who,47,1,首次出現在 WHO 第 47 期報告
+2020-03-07,TGO,first_reported_by_who,47,1,首次出現在 WHO 第 47 期報告
+2020-03-07,VAT,first_reported_by_who,47,1,首次出現在 WHO 第 47 期報告
+2020-03-07,BRA,local_transmission_start,47,13,WHO 分類由境外移入轉為本土傳播
+2020-03-07,CMR,local_transmission_start,47,2,WHO 分類由境外移入轉為本土傳播
+2020-03-07,ISL,local_transmission_start,47,45,WHO 分類由境外移入轉為本土傳播
+2020-03-07,SVK,local_transmission_start,47,1,WHO 分類由境外移入轉為本土傳播
+2020-03-08,BGR,first_reported_by_who,48,2,首次出現在 WHO 第 48 期報告
+2020-03-08,CRI,first_reported_by_who,48,5,首次出現在 WHO 第 48 期報告
+2020-03-08,FRO,first_reported_by_who,48,1,首次出現在 WHO 第 48 期報告
+2020-03-08,GUF,first_reported_by_who,48,5,首次出現在 WHO 第 48 期報告
+2020-03-08,MDA,first_reported_by_who,48,1,首次出現在 WHO 第 48 期報告
+2020-03-08,MDV,first_reported_by_who,48,2,首次出現在 WHO 第 48 期報告
+2020-03-08,MLT,first_reported_by_who,48,3,首次出現在 WHO 第 48 期報告
+2020-03-08,MTQ,first_reported_by_who,48,2,首次出現在 WHO 第 48 期報告
+2020-03-08,AUT,local_transmission_start,48,104,WHO 分類由境外移入轉為本土傳播
+2020-03-08,BGR,local_transmission_start,48,2,WHO 分類由境外移入轉為本土傳播
+2020-03-08,EGY,local_transmission_start,48,48,WHO 分類由境外移入轉為本土傳播
+2020-03-08,HUN,local_transmission_start,48,7,WHO 分類由境外移入轉為本土傳播
+2020-03-08,KHM,local_transmission_start,48,2,WHO 分類由境外移入轉為本土傳播
+2020-03-08,MDV,local_transmission_start,48,2,WHO 分類由境外移入轉為本土傳播
+2020-03-08,PER,local_transmission_start,48,6,WHO 分類由境外移入轉為本土傳播
+2020-03-09,ALB,first_reported_by_who,49,2,首次出現在 WHO 第 49 期報告
+2020-03-09,BGD,first_reported_by_who,49,3,首次出現在 WHO 第 49 期報告
+2020-03-09,BIH,first_reported_by_who,50,2,首次出現在 WHO 第 50 期報告
+2020-03-09,BRN,first_reported_by_who,50,1,首次出現在 WHO 第 50 期報告
+2020-03-09,CYP,first_reported_by_who,50,2,首次出現在 WHO 第 50 期報告
+2020-03-09,GGY,first_reported_by_who,50,1,首次出現在 WHO 第 50 期報告
+2020-03-09,MNG,first_reported_by_who,50,1,首次出現在 WHO 第 50 期報告
+2020-03-09,PAN,first_reported_by_who,50,1,首次出現在 WHO 第 50 期報告
+2020-03-09,PRY,first_reported_by_who,49,1,首次出現在 WHO 第 49 期報告
+2020-03-09,PSE,first_reported_by_who,49,19,首次出現在 WHO 第 49 期報告
+2020-03-09,BGD,local_transmission_start,49,3,WHO 分類由境外移入轉為本土傳播
+2020-03-09,BHR,local_transmission_start,49,79,WHO 分類由境外移入轉為本土傳播
+2020-03-09,BIH,local_transmission_start,50,2,WHO 分類由境外移入轉為本土傳播
+2020-03-09,CHL,local_transmission_start,49,10,WHO 分類由境外移入轉為本土傳播
+2020-03-09,CRI,local_transmission_start,49,9,WHO 分類由境外移入轉為本土傳播
+2020-03-09,IRQ,local_transmission_start,49,60,WHO 分類由境外移入轉為本土傳播
+2020-03-09,MKD,local_transmission_start,50,7,WHO 分類由境外移入轉為本土傳播
+2020-03-09,PAK,local_transmission_start,50,16,WHO 分類由境外移入轉為本土傳播
+2020-03-09,POL,local_transmission_start,50,16,WHO 分類由境外移入轉為本土傳播
+2020-03-09,PSE,local_transmission_start,49,19,WHO 分類由境外移入轉為本土傳播
+2020-03-11,BFA,first_reported_by_who,51,2,首次出現在 WHO 第 51 期報告
+2020-03-11,BOL,first_reported_by_who,51,2,首次出現在 WHO 第 51 期報告
+2020-03-11,COD,first_reported_by_who,51,1,首次出現在 WHO 第 51 期報告
+2020-03-11,JAM,first_reported_by_who,51,1,首次出現在 WHO 第 51 期報告
+2020-03-11,ALB,local_transmission_start,51,10,WHO 分類由境外移入轉為本土傳播
+2020-03-11,PRY,local_transmission_start,51,5,WHO 分類由境外移入轉為本土傳播
+2020-03-11,SAU,local_transmission_start,51,20,WHO 分類由境外移入轉為本土傳播
+2020-03-11,SRB,local_transmission_start,51,12,WHO 分類由境外移入轉為本土傳播
+2020-03-11,TUN,local_transmission_start,51,6,WHO 分類由境外移入轉為本土傳播
+2020-03-12,CIV,first_reported_by_who,52,1,首次出現在 WHO 第 52 期報告
+2020-03-12,HND,first_reported_by_who,52,2,首次出現在 WHO 第 52 期報告
+2020-03-12,PYF,first_reported_by_who,52,1,首次出現在 WHO 第 52 期報告
+2020-03-12,TUR,first_reported_by_who,52,1,首次出現在 WHO 第 52 期報告
+2020-03-12,BRN,local_transmission_start,52,12,WHO 分類由境外移入轉為本土傳播
+2020-03-12,KWT,local_transmission_start,52,80,WHO 分類由境外移入轉為本土傳播
+2020-03-12,LUX,local_transmission_start,52,17,WHO 分類由境外移入轉為本土傳播
+2020-03-12,MAR,local_transmission_start,52,5,WHO 分類由境外移入轉為本土傳播
+2020-03-12,PAN,local_transmission_start,52,10,WHO 分類由境外移入轉為本土傳播
+2020-03-12,QAT,local_transmission_start,52,262,WHO 分類由境外移入轉為本土傳播
+2020-03-13,CUB,first_reported_by_who,53,3,首次出現在 WHO 第 53 期報告
+2020-03-13,GUY,first_reported_by_who,53,1,首次出現在 WHO 第 53 期報告
+2020-03-13,JEY,first_reported_by_who,53,2,首次出現在 WHO 第 53 期報告
+2020-03-13,REU,first_reported_by_who,53,3,首次出現在 WHO 第 53 期報告
+2020-03-13,VCT,first_reported_by_who,53,1,首次出現在 WHO 第 53 期報告
+2020-03-14,ATG,first_reported_by_who,54,1,首次出現在 WHO 第 54 期報告
+2020-03-14,CYM,first_reported_by_who,54,1,首次出現在 WHO 第 54 期報告
+2020-03-14,ETH,first_reported_by_who,54,1,首次出現在 WHO 第 54 期報告
+2020-03-14,GAB,first_reported_by_who,54,1,首次出現在 WHO 第 54 期報告
+2020-03-14,GHA,first_reported_by_who,54,1,首次出現在 WHO 第 54 期報告
+2020-03-14,GIN,first_reported_by_who,54,1,首次出現在 WHO 第 54 期報告
+2020-03-14,GLP,first_reported_by_who,54,1,首次出現在 WHO 第 54 期報告
+2020-03-14,KEN,first_reported_by_who,54,1,首次出現在 WHO 第 54 期報告
+2020-03-14,PRI,first_reported_by_who,54,3,首次出現在 WHO 第 54 期報告
+2020-03-14,SDN,first_reported_by_who,54,1,首次出現在 WHO 第 54 期報告
+2020-03-14,TTO,first_reported_by_who,54,1,首次出現在 WHO 第 54 期報告
+2020-03-14,VEN,first_reported_by_who,54,2,首次出現在 WHO 第 54 期報告
+2020-03-14,ARG,local_transmission_start,54,34,WHO 分類由境外移入轉為本土傳播
+2020-03-14,EST,local_transmission_start,54,79,WHO 分類由境外移入轉為本土傳播
+2020-03-14,LKA,local_transmission_start,54,6,WHO 分類由境外移入轉為本土傳播
+2020-03-14,SEN,local_transmission_start,54,10,WHO 分類由境外移入轉為本土傳播
+2020-03-14,UKR,local_transmission_start,54,3,WHO 分類由境外移入轉為本土傳播
+2020-03-14,ZAF,local_transmission_start,54,17,WHO 分類由境外移入轉為本土傳播
+2020-03-15,CAF,first_reported_by_who,55,1,首次出現在 WHO 第 55 期報告
+2020-03-15,COG,first_reported_by_who,55,1,首次出現在 WHO 第 55 期報告
+2020-03-15,CUW,first_reported_by_who,55,2,首次出現在 WHO 第 55 期報告
+2020-03-15,GNQ,first_reported_by_who,55,1,首次出現在 WHO 第 55 期報告
+2020-03-15,GTM,first_reported_by_who,56,1,首次出現在 WHO 第 56 期報告
+2020-03-15,KAZ,first_reported_by_who,55,6,首次出現在 WHO 第 55 期報告
+2020-03-15,LCA,first_reported_by_who,56,1,首次出現在 WHO 第 56 期報告
+2020-03-15,MRT,first_reported_by_who,55,1,首次出現在 WHO 第 55 期報告
+2020-03-15,MYT,first_reported_by_who,55,1,首次出現在 WHO 第 55 期報告
+2020-03-15,NAM,first_reported_by_who,55,2,首次出現在 WHO 第 55 期報告
+2020-03-15,RWA,first_reported_by_who,56,5,首次出現在 WHO 第 56 期報告
+2020-03-15,SUR,first_reported_by_who,56,1,首次出現在 WHO 第 56 期報告
+2020-03-15,SWZ,first_reported_by_who,55,1,首次出現在 WHO 第 55 期報告
+2020-03-15,SYC,first_reported_by_who,56,2,首次出現在 WHO 第 56 期報告
+2020-03-15,URY,first_reported_by_who,56,4,首次出現在 WHO 第 56 期報告
+2020-03-15,UZB,first_reported_by_who,56,4,首次出現在 WHO 第 56 期報告
+2020-03-15,ARM,local_transmission_start,55,8,WHO 分類由境外移入轉為本土傳播
+2020-03-15,CHN,local_transmission_start,56,81077,WHO 分類由境外移入轉為本土傳播
+2020-03-15,COL,local_transmission_start,55,24,WHO 分類由境外移入轉為本土傳播
+2020-03-15,GUY,local_transmission_start,56,4,WHO 分類由境外移入轉為本土傳播
+2020-03-15,JAM,local_transmission_start,55,8,WHO 分類由境外移入轉為本土傳播
+2020-03-15,RWA,local_transmission_start,56,5,WHO 分類由境外移入轉為本土傳播
+2020-03-17,ABW,first_reported_by_who,57,2,首次出現在 WHO 第 57 期報告
+2020-03-17,BEN,first_reported_by_who,57,1,首次出現在 WHO 第 57 期報告
+2020-03-17,BHS,first_reported_by_who,57,1,首次出現在 WHO 第 57 期報告
+2020-03-17,GUM,first_reported_by_who,57,3,首次出現在 WHO 第 57 期報告
+2020-03-17,LBR,first_reported_by_who,57,1,首次出現在 WHO 第 57 期報告
+2020-03-17,SOM,first_reported_by_who,57,1,首次出現在 WHO 第 57 期報告
+2020-03-17,BHS,local_transmission_start,57,1,WHO 分類由境外移入轉為本土傳播
+2020-03-17,DOM,local_transmission_start,57,21,WHO 分類由境外移入轉為本土傳播
+2020-03-17,GUM,local_transmission_start,57,3,WHO 分類由境外移入轉為本土傳播
+2020-03-17,KEN,local_transmission_start,57,3,WHO 分類由境外移入轉為本土傳播
+2020-03-17,MDA,local_transmission_start,57,29,WHO 分類由境外移入轉為本土傳播
+2020-03-18,MNE,first_reported_by_who,58,2,首次出現在 WHO 第 58 期報告
+2020-03-19,BMU,first_reported_by_who,60,2,首次出現在 WHO 第 60 期報告
+2020-03-19,BRB,first_reported_by_who,59,2,首次出現在 WHO 第 59 期報告
+2020-03-19,DJI,first_reported_by_who,59,1,首次出現在 WHO 第 59 期報告
+2020-03-19,FJI,first_reported_by_who,60,1,首次出現在 WHO 第 60 期報告
+2020-03-19,GMB,first_reported_by_who,59,1,首次出現在 WHO 第 59 期報告
+2020-03-19,GRL,first_reported_by_who,59,2,首次出現在 WHO 第 59 期報告
+2020-03-19,KGZ,first_reported_by_who,59,3,首次出現在 WHO 第 59 期報告
+2020-03-19,MSR,first_reported_by_who,59,1,首次出現在 WHO 第 59 期報告
+2020-03-19,MUS,first_reported_by_who,59,3,首次出現在 WHO 第 59 期報告
+2020-03-19,NCL,first_reported_by_who,60,2,首次出現在 WHO 第 60 期報告
+2020-03-19,NER,first_reported_by_who,60,1,首次出現在 WHO 第 60 期報告
+2020-03-19,NIC,first_reported_by_who,60,1,首次出現在 WHO 第 60 期報告
+2020-03-19,SLV,first_reported_by_who,60,1,首次出現在 WHO 第 60 期報告
+2020-03-19,SXM,first_reported_by_who,60,1,首次出現在 WHO 第 60 期報告
+2020-03-19,TCD,first_reported_by_who,60,1,首次出現在 WHO 第 60 期報告
+2020-03-19,ZMB,first_reported_by_who,59,2,首次出現在 WHO 第 59 期報告
+2020-03-19,CUB,local_transmission_start,59,10,WHO 分類由境外移入轉為本土傳播
+2020-03-19,CYP,local_transmission_start,59,58,WHO 分類由境外移入轉為本土傳播
+2020-03-19,GHA,local_transmission_start,60,11,WHO 分類由境外移入轉為本土傳播
+2020-03-19,GUF,local_transmission_start,60,15,WHO 分類由境外移入轉為本土傳播
+2020-03-19,LBR,local_transmission_start,59,2,WHO 分類由境外移入轉為本土傳播
+2020-03-19,TUR,local_transmission_start,59,191,WHO 分類由境外移入轉為本土傳播
+2020-03-19,UZB,local_transmission_start,60,21,WHO 分類由境外移入轉為本土傳播
+2020-03-20,CPV,first_reported_by_who,61,1,首次出現在 WHO 第 61 期報告
+2020-03-20,HTI,first_reported_by_who,61,2,首次出現在 WHO 第 61 期報告
+2020-03-20,IMN,first_reported_by_who,61,1,首次出現在 WHO 第 61 期報告
+2020-03-20,PNG,first_reported_by_who,61,1,首次出現在 WHO 第 61 期報告
+2020-03-20,TLS,first_reported_by_who,61,1,首次出現在 WHO 第 61 期報告
+2020-03-20,ZWE,first_reported_by_who,61,1,首次出現在 WHO 第 61 期報告
+2020-03-20,OMN,local_transmission_start,61,48,WHO 分類由境外移入轉為本土傳播
+2020-03-21,AGO,first_reported_by_who,62,2,首次出現在 WHO 第 62 期報告
+2020-03-21,ERI,first_reported_by_who,62,1,首次出現在 WHO 第 62 期報告
+2020-03-21,MDG,first_reported_by_who,62,3,首次出現在 WHO 第 62 期報告
+2020-03-21,UGA,first_reported_by_who,62,1,首次出現在 WHO 第 62 期報告
+2020-03-21,BFA,local_transmission_start,62,72,WHO 分類由境外移入轉為本土傳播
+2020-03-21,FJI,local_transmission_start,62,2,WHO 分類由境外移入轉為本土傳播
+2020-03-21,FRO,local_transmission_start,62,92,WHO 分類由境外移入轉為本土傳播
+2020-03-21,RUS,local_transmission_start,62,306,WHO 分類由境外移入轉為本土傳播
+2020-03-23,GRD,first_reported_by_who,63,1,首次出現在 WHO 第 63 期報告
+2020-03-23,MOZ,first_reported_by_who,63,1,首次出現在 WHO 第 63 期報告
+2020-03-23,SYR,first_reported_by_who,63,1,首次出現在 WHO 第 63 期報告
+2020-03-23,AND,local_transmission_start,63,113,WHO 分類由境外移入轉為本土傳播
+2020-03-23,AZE,local_transmission_start,63,65,WHO 分類由境外移入轉為本土傳播
+2020-03-23,GEO,local_transmission_start,63,54,WHO 分類由境外移入轉為本土傳播
+2020-03-23,JOR,local_transmission_start,63,112,WHO 分類由境外移入轉為本土傳播
+2020-03-23,LTU,local_transmission_start,63,143,WHO 分類由境外移入轉為本土傳播
+2020-03-23,LVA,local_transmission_start,63,139,WHO 分類由境外移入轉為本土傳播
+2020-03-23,MCO,local_transmission_start,63,23,WHO 分類由境外移入轉為本土傳播
+2020-03-23,MEX,local_transmission_start,63,251,WHO 分類由境外移入轉為本土傳播
+2020-03-23,MLT,local_transmission_start,63,90,WHO 分類由境外移入轉為本土傳播
+2020-03-23,PYF,local_transmission_start,63,17,WHO 分類由境外移入轉為本土傳播
+2020-03-24,BLZ,first_reported_by_who,64,1,首次出現在 WHO 第 64 期報告
+2020-03-24,DMA,first_reported_by_who,64,1,首次出現在 WHO 第 64 期報告
+2020-03-24,MMR,first_reported_by_who,64,2,首次出現在 WHO 第 64 期報告
+2020-03-24,GTM,local_transmission_start,64,20,WHO 分類由境外移入轉為本土傳播
+2020-03-24,HND,local_transmission_start,64,30,WHO 分類由境外移入轉為本土傳播
+2020-03-24,JEY,local_transmission_start,64,18,WHO 分類由境外移入轉為本土傳播
+2020-03-24,KGZ,local_transmission_start,64,16,WHO 分類由境外移入轉為本土傳播
+2020-03-25,LBY,first_reported_by_who,65,1,首次出現在 WHO 第 65 期報告
+2020-03-25,ABW,local_transmission_start,65,12,WHO 分類由境外移入轉為本土傳播
+2020-03-25,BRB,local_transmission_start,65,18,WHO 分類由境外移入轉為本土傳播
+2020-03-25,GGY,local_transmission_start,65,23,WHO 分類由境外移入轉為本土傳播
+2020-03-25,GIB,local_transmission_start,65,15,WHO 分類由境外移入轉為本土傳播
+2020-03-25,MYT,local_transmission_start,65,30,WHO 分類由境外移入轉為本土傳播
+2020-03-25,NCL,local_transmission_start,65,10,WHO 分類由境外移入轉為本土傳播
+2020-03-25,REU,local_transmission_start,65,83,WHO 分類由境外移入轉為本土傳播
+2020-03-26,AIA,first_reported_by_who,67,2,首次出現在 WHO 第 67 期報告
+2020-03-26,GNB,first_reported_by_who,66,2,首次出現在 WHO 第 66 期報告
+2020-03-26,KNA,first_reported_by_who,66,2,首次出現在 WHO 第 66 期報告
+2020-03-26,MLI,first_reported_by_who,66,2,首次出現在 WHO 第 66 期報告
+2020-03-26,VGB,first_reported_by_who,67,2,首次出現在 WHO 第 67 期報告
+2020-03-26,AFG,local_transmission_start,66,80,WHO 分類由境外移入轉為本土傳播
+2020-03-26,AIA,local_transmission_start,67,2,WHO 分類由境外移入轉為本土傳播
+2020-03-26,BLZ,local_transmission_start,66,2,WHO 分類由境外移入轉為本土傳播
+2020-03-26,BMU,local_transmission_start,66,7,WHO 分類由境外移入轉為本土傳播
+2020-03-26,DJI,local_transmission_start,66,12,WHO 分類由境外移入轉為本土傳播
+2020-03-26,DMA,local_transmission_start,66,7,WHO 分類由境外移入轉為本土傳播
+2020-03-26,GRD,local_transmission_start,67,7,WHO 分類由境外移入轉為本土傳播
+2020-03-26,IMN,local_transmission_start,67,26,WHO 分類由境外移入轉為本土傳播
+2020-03-26,MNE,local_transmission_start,67,67,WHO 分類由境外移入轉為本土傳播
+2020-03-26,MOZ,local_transmission_start,66,5,WHO 分類由境外移入轉為本土傳播
+2020-03-26,NGA,local_transmission_start,66,46,WHO 分類由境外移入轉為本土傳播
+2020-03-26,TTO,local_transmission_start,66,60,WHO 分類由境外移入轉為本土傳播
+2020-03-28,LAO,first_reported_by_who,68,6,首次出現在 WHO 第 68 期報告
+2020-03-28,TCA,first_reported_by_who,68,2,首次出現在 WHO 第 68 期報告
+2020-03-28,TZA,first_reported_by_who,68,13,首次出現在 WHO 第 68 期報告
+2020-03-28,VIR,first_reported_by_who,68,17,首次出現在 WHO 第 68 期報告
+2020-03-28,BOL,local_transmission_start,68,61,WHO 分類由境外移入轉為本土傳播
+2020-03-28,COD,local_transmission_start,68,58,WHO 分類由境外移入轉為本土傳播
+2020-03-28,LAO,local_transmission_start,68,6,WHO 分類由境外移入轉為本土傳播
+2020-03-28,MLI,local_transmission_start,68,9,WHO 分類由境外移入轉為本土傳播
+2020-03-28,NER,local_transmission_start,68,10,WHO 分類由境外移入轉為本土傳播
+2020-03-28,URY,local_transmission_start,68,238,WHO 分類由境外移入轉為本土傳播
+2020-03-28,VEN,local_transmission_start,68,106,WHO 分類由境外移入轉為本土傳播
+2020-03-28,ZMB,local_transmission_start,68,13,WHO 分類由境外移入轉為本土傳播
+2020-03-28,ZWE,local_transmission_start,68,5,WHO 分類由境外移入轉為本土傳播
+2020-03-29,CIV,local_transmission_start,69,140,WHO 分類由境外移入轉為本土傳播
+2020-03-29,MMR,local_transmission_start,69,8,WHO 分類由境外移入轉為本土傳播
+2020-03-29,MUS,local_transmission_start,69,102,WHO 分類由境外移入轉為本土傳播
+2020-03-29,SLV,local_transmission_start,69,19,WHO 分類由境外移入轉為本土傳播
+2020-03-30,ETH,local_transmission_start,70,21,WHO 分類由境外移入轉為本土傳播
+2020-03-30,GNQ,local_transmission_start,70,13,WHO 分類由境外移入轉為本土傳播
+2020-03-30,LBY,local_transmission_start,70,8,WHO 分類由境外移入轉為本土傳播
+2020-03-30,TCA,local_transmission_start,70,4,WHO 分類由境外移入轉為本土傳播
+2020-03-30,TGO,local_transmission_start,70,28,WHO 分類由境外移入轉為本土傳播
+2020-03-30,UGA,local_transmission_start,70,33,WHO 分類由境外移入轉為本土傳播
+2020-03-31,GIN,local_transmission_start,71,16,WHO 分類由境外移入轉為本土傳播
+2020-03-31,KAZ,local_transmission_start,71,312,WHO 分類由境外移入轉為本土傳播
+2020-03-31,LCA,local_transmission_start,71,9,WHO 分類由境外移入轉為本土傳播
+2020-03-31,MTQ,local_transmission_start,71,111,WHO 分類由境外移入轉為本土傳播
