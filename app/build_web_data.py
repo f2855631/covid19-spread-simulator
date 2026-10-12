@@ -83,6 +83,7 @@ def main():
             "cont": CONT_ZH.get(r["continent"], "") if r is not None and pd.notna(r["continent"]) else "",
             "obsFirst": day(inp.obs_first.iloc[i]) if pd.notna(inp.obs_first.iloc[i]) else None,
             "numeric": "156" if iso == "CHN" else num.get(iso),
+            "reg": inp.region[i],
         })
 
     ii, jj = np.nonzero(inp.routes)

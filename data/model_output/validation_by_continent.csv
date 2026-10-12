@@ -1,7 +1,7 @@
 continent,n,predicted,mae_days,bias_days,within14
-Asia,43,40,13.7,-9.7,0.605
-Europe,45,40,7.5,-1.7,0.822
-Africa,49,46,10.3,-1.4,0.755
-North America,23,23,8.0,-6.8,1.0
-South America,12,12,4.1,1.2,1.0
-Oceania,4,4,8.8,-8.2,1.0
+Asia,43,40,12.3,-5.2,0.674
+Europe,45,40,7.0,-1.7,0.756
+Africa,49,47,8.6,-6.9,0.796
+North America,23,23,10.0,-7.1,0.87
+South America,12,12,3.2,-1.4,1.0
+Oceania,4,4,3.0,-2.5,1.0

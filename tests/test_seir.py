@@ -116,3 +116,21 @@ def test_travel_parameters_take_effect_at_run_time():
     p2["travel"]["passengers_per_route_per_day"] = 5.0
     high = seir.simulate(p2, inp)
     assert high.imports[:, 1].sum() > 2 * low.imports[:, 1].sum()
+
+
+def test_region_parameters_apply_only_to_their_region():
+    p, inp = make_world()
+    inp.region = ["Y", "Y", "Z"]          # A 是起點：即使屬於 Y 也不套用地區參數
+    base = seir.simulate(p, inp, flow_min=None)
+    q = copy.deepcopy(p)
+    q["regions"] = {"Y": {"contact": 0.5, "ratio": 0.2}}
+    r = seir.simulate(q, inp, flow_min=None)
+    # 起點 A 在 B 傳回病毒前完全相同；B 的傳播變慢
+    first_import_A = int(np.argmax(base.imports[:, 0] > 0))
+    np.testing.assert_allclose(r.new_inf[:first_import_A, 0], base.new_inf[:first_import_A, 0])
+    assert r.new_inf[:, 1].sum() < base.new_inf[:, 1].sum()
+    # 通報率：初期用 ratio_early；過渡期結束後 B 用地區值，C 用預設值
+    q["reporting"].update({"ratio_early": 0.5, "early_ramp_start": "2020-02-01", "early_ramp_end": "2020-02-11"})
+    ratio = seir.reporting_ratio(q, inp)
+    assert ratio[0, 1] == 0.5 and ratio[0, 2] == 0.5
+    assert ratio[-1, 1] == 0.2 and ratio[-1, 2] == q["reporting"]["ratio_default"]

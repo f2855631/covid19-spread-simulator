@@ -5,18 +5,18 @@
    "group": "訓練組（2/29 前首例）",
    "n": 59,
    "predicted": 57,
-   "mae_days": 6.4,
-   "within14": 0.864,
-   "spearman": 0.76
+   "mae_days": 7.0,
+   "within14": 0.814,
+   "spearman": 0.68
   },
   {
    "method": "模型（校準後 SEIR）",
    "group": "測試組（3 月首例）",
    "n": 118,
-   "predicted": 108,
-   "mae_days": 11.4,
-   "within14": 0.746,
-   "spearman": 0.43
+   "predicted": 109,
+   "mae_days": 9.7,
+   "within14": 0.763,
+   "spearman": 0.53
   },
   {
    "method": "基準 B：只看與中國的航線數",
@@ -60,60 +60,70 @@
    "continent": "Asia",
    "n": 43,
    "predicted": 40,
-   "mae_days": 13.7,
-   "bias_days": -9.7,
-   "within14": 0.605
+   "mae_days": 12.3,
+   "bias_days": -5.2,
+   "within14": 0.674
   },
   {
    "continent": "Europe",
    "n": 45,
    "predicted": 40,
-   "mae_days": 7.5,
+   "mae_days": 7.0,
    "bias_days": -1.7,
-   "within14": 0.822
+   "within14": 0.756
   },
   {
    "continent": "Africa",
    "n": 49,
-   "predicted": 46,
-   "mae_days": 10.3,
-   "bias_days": -1.4,
-   "within14": 0.755
+   "predicted": 47,
+   "mae_days": 8.6,
+   "bias_days": -6.9,
+   "within14": 0.796
   },
   {
    "continent": "North America",
    "n": 23,
    "predicted": 23,
-   "mae_days": 8.0,
-   "bias_days": -6.8,
-   "within14": 1.0
+   "mae_days": 10.0,
+   "bias_days": -7.1,
+   "within14": 0.87
   },
   {
    "continent": "South America",
    "n": 12,
    "predicted": 12,
-   "mae_days": 4.1,
-   "bias_days": 1.2,
+   "mae_days": 3.2,
+   "bias_days": -1.4,
    "within14": 1.0
   },
   {
    "continent": "Oceania",
    "n": 4,
    "predicted": 4,
-   "mae_days": 8.8,
-   "bias_days": -8.2,
+   "mae_days": 3.0,
+   "bias_days": -2.5,
    "within14": 1.0
   }
  ],
  "ensemble": {
   "runs": 50,
-  "coverage_p10_p90": 0.316,
-  "median_width_days": 17.199999999999996
+  "coverage_p10_p90": 0.203,
+  "median_width_days": 19.400000000000006
  },
- "sensitivity_base_top30_mae": 5.766666666666667,
+ "sensitivity_base_top30_mae": 7.8,
  "curves": {
-  "curve_rmse_log10": 0.19948146719867446,
-  "curve_mape": 0.4272436287954797,
-  "daily_rmse_log10": 0.0876127630870733
+  "outside_china_mape": 0.186,
+  "outside_china_ratio_0430": 1.17,
+  "region_ratio_0430": {
+   "EAP": 1.05,
+   "ECA": 1.22,
+   "MENA": 1.88,
+   "SAS": 0.7,
+   "NAM": 1.05,
+   "LAC": 0.96,
+   "SSA": 0.99
+  },
+  "countries_with_10plus_cases": 177,
+  "countries_within_2x_0430": 0.842
  }
 }

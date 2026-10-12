@@ -25,6 +25,16 @@
     return D._prep;
   }
 
+  /* 各節點的地區參數（P.regions[地區][key]）；起點（P.origin.node，預設湖北）固定用 def */
+  function regionValues(D, P, key, def) {
+    const { idx } = prepare(D), reg = P.regions || {};
+    const cc = key === "contact" ? (P.country_contact || {}) : {};   // 各國傳播倍數（只作用在 contact）
+    const v = Float64Array.from(D.nodes, x => { const r = reg[x.reg]; return (r && r[key] !== undefined ? +r[key] : def) * (cc[x.iso3] ?? 1); });
+    const o = idx[P.origin.node];
+    if (o !== undefined) v[o] = def;
+    return v;
+  }
+
   function buildTravel(D, P) {
     const { n, idx, routes } = prepare(D);
     const tr = P.travel, pax = tr.passengers_per_route_per_day;
@@ -54,7 +64,8 @@
     scen = scen || {};
     const { n, idx, N } = prepare(D);
     const T = D.T, ep = P.epidemiology, tr = P.travel, rp = P.reporting, lk = P.lockdown;
-    const sigma = 1 / ep.latent_days, gamma = 1 / ep.infectious_days, beta0 = ep.R0 * gamma;
+    const sigma = 1 / ep.latent_days, gamma = 1 / ep.infectious_days;
+    const beta0 = regionValues(D, P, "contact", 1).map(c => ep.R0 * gamma * c);   // 各地區傳播倍數
     const steps = Math.round(P.simulation.steps_per_day), dt = 1 / steps;
     const hub = idx[HUB], chn = idx[CHN];
     const o = idx[scen.origin || P.origin.node];
@@ -112,7 +123,7 @@
       }
       for (let x = 0; x < n; x++) {
         const si = D.si[x][t];
-        let b = beta0 * Math.max(1 - k[x] * si / 100, 0) * arrived[x];
+        let b = beta0[x] * Math.max(1 - k[x] * si / 100, 0) * arrived[x];
         if (traceC > 0 && t >= traceDay) b = b * (1 - traceC * traceCap[x] / (traceCap[x] + I[x] + 1e-12));
         beta[x] = b;
       }
@@ -198,11 +209,13 @@
     const iratio = rp.import_ratio ?? rp.ratio_default, test0 = dayOf(D, rp.testing_start || D.start);
     const reported = new Float64Array(T * n), detect = new Int32Array(n).fill(-1);
     const acc = new Float64Array(n), thr = rp.detect_threshold;
+    const regRatio = regionValues(D, P, "ratio", rp.ratio_default);   // 各地區通報率
+    const early = rp.ratio_early ?? null, ea = early === null ? 0 : dayOf(D, rp.early_ramp_start), eb = early === null ? 0 : dayOf(D, rp.early_ramp_end);
     for (let t = 0; t < T; t++) {
       const w = Math.min(Math.max((t - a) / Math.max(b - a, 1), 0), 1);
       for (let x = 0; x < n; x++) {
         if (t >= test0) {
-          const ratio = x === hub ? rp.ratio_hubei_early + w * (rp.ratio_hubei - rp.ratio_hubei_early) : rp.ratio_default;
+          const ratio = x === hub ? rp.ratio_hubei_early + w * (rp.ratio_hubei - rp.ratio_hubei_early) : (early === null ? regRatio[x] : early + Math.min(Math.max((t - ea) / Math.max(eb - ea, 1), 0), 1) * (regRatio[x] - early));
           const loc = t - lag >= 0 ? newInf[(t - lag) * n + x] * ratio : 0;
           const imp = t - lagI >= 0 ? imports[(t - lagI) * n + x] * iratio : 0;
           acc[x] += loc + imp;
@@ -276,7 +289,7 @@
     function nm(i) { return D.nodes[i].zh || D.nodes[i].name; }
   }
 
-  const api = { simulate, applyReporting, buildTravel, mainSources, keyMoments, dayOf, prepare };
+  const api = { simulate, regionValues, applyReporting, buildTravel, mainSources, keyMoments, dayOf, prepare };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.SimCore = api;
 })(typeof window !== "undefined" ? window : globalThis);

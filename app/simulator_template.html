@@ -152,6 +152,22 @@ aside { display: grid; gap: 14px; min-width: 0; }
 footer { color: var(--muted); font-size: 12px; border-top: 1px solid var(--rule); padding-top: 10px; display: grid; gap: 4px; }
 footer p { margin: 0; max-width: 110ch; }
 .err { color: var(--infect); }
+.seg.mini button { padding: 3px 10px; font-size: 12px; }
+.selhead { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+#sel-chart { width: 100%; height: 150px; display: block; }
+#sel-chart text { fill: var(--muted); font-family: var(--font-data); font-size: 10px; }
+.peaks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.peaks .v { font-family: var(--font-data); font-variant-numeric: tabular-nums; font-size: 15px; }
+.peaks .l { color: var(--muted); font-size: 11px; line-height: 1.3; }
+details.cmp-list summary { cursor: pointer; font-size: 12.5px; color: var(--muted); }
+.cmp-scroll { max-height: 240px; overflow: auto; border: 1px solid var(--rule); border-radius: 4px; margin-top: 6px; }
+.cmp-scroll table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.cmp-scroll th { position: sticky; top: 0; background: var(--panel); text-align: left; font-weight: 500; color: var(--muted); padding: 4px 8px; border-bottom: 1px solid var(--rule); }
+.cmp-scroll th, .cmp-scroll td { white-space: nowrap; }
+.cmp-scroll td { padding: 3px 8px; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
+.cmp-scroll td.num { font-family: var(--font-data); text-align: right; }
+.later { color: var(--obs); } .earlier { color: var(--infect); }
+.btn.small { padding: 3px 10px; font-size: 12px; }
 </style>
 
 <div class="wrap">
@@ -185,6 +201,7 @@ footer p { margin: 0; max-width: 110ch; }
       <div class="transport">
         <button class="btn primary" id="play" aria-label="播放">▶ 播放</button>
         <div class="chips" id="chips" role="group" aria-label="時機點類型"></div>
+        <button class="btn small" id="export-csv" title="下載目前情境的各國結果（CSV）">⬇ 匯出 CSV</button>
         <label class="topn" for="topn">顯示前 <output id="topn-v" class="mono">20</output> 個
           <input type="range" id="topn" min="5" max="60" step="1" value="20"></label>
       </div>
@@ -206,7 +223,7 @@ footer p { margin: 0; max-width: 110ch; }
 
       <section class="card" aria-labelledby="h-sel">
         <h2 id="h-sel">選取的國家</h2>
-        <div id="sel">點地圖上的國家或擴散點，查看它的首例日與感染來源鏈。</div>
+        <div id="sel">點地圖上的國家或擴散點，查看它的疫情曲線、高峰、首例日與感染來源鏈。</div>
       </section>
 
       <section class="card" aria-labelledby="h-ctl" id="controls">
@@ -244,7 +261,11 @@ footer p { margin: 0; max-width: 110ch; }
           <select id="p-origin"></select>
         </div>
         <div class="compare" id="compare"></div>
-        <button class="btn" id="reset">恢復校準值</button>
+        <div class="btnrow">
+          <button class="btn" id="reset">恢復校準值</button>
+          <button class="btn" id="set-a" title="把目前的參數存成情境 A，之後調整的結果都和 A 比較">設為比較基準 A</button>
+          <button class="btn" id="clear-a" hidden>改回和校準基準比較</button>
+        </div>
       </section>
       <p class="note" id="real-note" hidden>真實資料模式：擴散點是各國實際首例日（JHU、WHO），擴散路線由航線數 × 來源地近 14 天新增確診推算。切回「模擬」可調整參數。</p>
     </aside>
@@ -295,8 +316,8 @@ footer p { margin: 0; max-width: 110ch; }
   </section>
 
   <footer>
-    <p>模型：每個國家一組 SEIR（湖北獨立），國家之間以 OpenFlights 航線連動，納入武漢封城、各國 OxCGRT 防疫嚴格指數與入境管制；參數以 2020 年 1–4 月的 JHU 確診資料校準（最早 30 國首例日平均誤差 5.8 天）。</p>
-    <p>重要度 = 0.5 × 之後 14 天新增受感染國家數 + 0.3 × 人口規模 + 0.2 × 事件類型權重。模擬結果是情境推演，不是預測；4 月歐美封城後的趨平未完全重現。</p>
+    <p>模型：每個國家一組 SEIR（湖北獨立），國家之間以 OpenFlights 航線連動，納入武漢封城、各國 OxCGRT 防疫嚴格指數與入境管制；七個地區各有傳播倍數與通報率，各國另有傳播倍數，以 2020 年 1–4 月的 JHU 確診資料校準。沒用來校準的 3 月首例國家，首例日平均誤差 9.7 天。</p>
+    <p>重要度 = 0.5 × 之後 14 天新增受感染國家數 + 0.3 × 人口規模 + 0.2 × 事件類型權重。模擬結果是情境推演，不是預測：模型適合比較「病毒何時到達、封城早晚的差別」；延長到 5–6 月時，模型沒有重現歐洲封城後的下降，各國每日病例數僅供參考。</p>
     <p>資料：Johns Hopkins CSSE、WHO 情勢報告、Our World in Data、OpenFlights、Oxford COVID-19 Government Response Tracker、Natural Earth。</p>
   </footer>
 </div>
@@ -333,9 +354,10 @@ const TYPES = [
   ["first_case", "首例輸入"], ["continent_jump", "跨洲跳躍"], ["hub", "擴散樞紐"],
   ["local_transmission_start", "本土傳播"], ["policy", "政策事件"],
 ];
+const REGION_ZH = { EAP: "東亞與太平洋", ECA: "歐洲與中亞", MENA: "中東與北非", SAS: "南亞", NAM: "北美（美加）", LAC: "拉丁美洲與加勒比海", SSA: "撒哈拉以南非洲" };
 const TYPE_COLOR = { first_case: "--muted", continent_jump: "--obs", hub: "--infect", local_transmission_start: "--event", policy: "--ink" };
 
-const state = { mode: "sim", t: dayOf("2020-02-26"), playing: false, topN: 20, sel: null, selEvent: null,
+const state = { mode: "sim", t: dayOf("2020-02-26"), playing: false, topN: 20, sel: null, selEvent: null, selCurve: "rep",
   types: new Set(["first_case", "continent_jump", "hub", "policy"]) };
 
 /* ---------------- 情境參數 ---------------- */
@@ -371,6 +393,14 @@ function initControls() {
   [cutOn, cut, cutk].forEach(el => el.addEventListener("input", () => { syncCut(); schedule(); }));
   syncCut();
   sel.addEventListener("change", () => { scen.origin = sel.value; schedule(); });
+  document.getElementById("set-a").addEventListener("click", () => {
+    baseKey = scenKey(); baseLabel = "情境 A"; base = sim;
+    document.getElementById("clear-a").hidden = false; renderFrame();
+  });
+  document.getElementById("clear-a").addEventListener("click", () => {
+    baseKey = JSON.stringify([P0, { origin: "CHN-HUB", intlCutDay: undefined, intlCutKeep: 0.5 }]); baseLabel = "校準基準";
+    base = calib; document.getElementById("clear-a").hidden = true; renderFrame();
+  });
   document.getElementById("reset").addEventListener("click", () => {
     P = JSON.parse(JSON.stringify(P0)); scen.origin = "CHN-HUB"; cutOn.checked = false; syncCut(); resetControls(); schedule();
   });
@@ -390,7 +420,7 @@ function resetControls() {
 }
 
 /* ---------------- 模型執行與兩種資料來源 ---------------- */
-let base = null, sim = null, view = null, timer = null;
+let base = null, calib = null, sim = null, view = null, timer = null;
 function runSim(Pp, sc) {
   const s = SimCore.simulate(D, Pp, sc);
   const ms = SimCore.mainSources(s);
@@ -547,28 +577,99 @@ function chainOf(i) {
   return out;
 }
 function select(i) { state.sel = i; renderSel(); renderMap(); }
-function renderSel() {
-  const el = document.getElementById("sel"), i = state.sel;
-  if (i === null || i === undefined) { el.innerHTML = "點地圖上的國家或擴散點，查看它的首例日與感染來源鏈。"; return; }
-  const x = D.nodes[i], f = view.first[i], obs = x.obsFirst;
-  const chain = chainOf(i).map(nm);
-  const t = state.t;
-  let rows = `<dt>首例（${view.kind === "sim" ? "模型" : "真實"}）</dt><dd>${f >= 0 ? dstr(f) : "未出現"}</dd>`;
+// 單一國家的每日序列：模型（感染、確診、E/I/R）與真實確診
+function seriesOf(i) {
+  const obsDaily = new Float64Array(T).fill(NaN);
+  for (let t = D.obsStart + 1; t < T; t++) {
+    const a = D.obsCum[i][t - D.obsStart], b = D.obsCum[i][t - D.obsStart - 1];
+    if (a !== null && a !== undefined && b !== null && b !== undefined) obsDaily[t] = Math.max(a - b, 0);
+  }
+  const obs7 = avg7(obsDaily);
+  if (view.kind !== "sim") return { obs7 };
+  const s = view.s, inf = new Float64Array(T), rep = new Float64Array(T), E = new Float64Array(T), I = new Float64Array(T), R = new Float64Array(T);
+  for (let t = 0; t < T; t++) {
+    inf[t] = s.newInf[t * n + i] + s.imports[t * n + i];
+    rep[t] = s.reported[t * n + i] - (t > 0 ? s.reported[(t - 1) * n + i] : 0);
+    E[t] = s.E[t * n + i]; I[t] = s.I[t * n + i]; R[t] = s.R[t * n + i];
+  }
+  return { obs7, inf, rep7: avg7(rep), E, I, R };
+}
+function avg7(a) {
+  const out = new Float64Array(a.length).fill(NaN);
+  for (let t = 6; t < a.length; t++) { let s = 0, ok = true; for (let q = t - 6; q <= t; q++) { if (!Number.isFinite(a[q])) { ok = false; break; } s += a[q]; } if (ok) out[t] = s / 7; }
+  return out;
+}
+function peakOf(a) { let m = -1, d = -1; for (let t = 0; t < a.length; t++) if (Number.isFinite(a[t]) && a[t] > m) { m = a[t]; d = t; } return { d, m }; }
+function selection(i) {
+  const x = D.nodes[i], f = view.first[i], obs = x.obsFirst, t = state.t;
+  const ser = seriesOf(i);
+  let peaks = "", rows = `<dt>首例（${view.kind === "sim" ? "模型" : "真實"}）</dt><dd>${f >= 0 ? dstr(f) : "未出現"}</dd>`;
+  const op = peakOf(ser.obs7);
+  const opTxt = op.m > 0 ? `${md(op.d)}<span class="note">（每日 ${fmt(op.m)}）</span>` : "—";
   if (view.kind === "sim") {
     rows += `<dt>首例（真實）</dt><dd>${obs !== null ? dstr(obs) : "—"}${f >= 0 && obs !== null ? `（模型${f - obs >= 0 ? "晚" : "早"} ${Math.abs(f - obs)} 天）` : ""}</dd>`;
-    const s = view.s;
-    rows += `<dt>${md(t)} 累計確診</dt><dd>${fmt(s.reported[t * n + i])}（模型）</dd>`;
-    let inf = 0; for (let q = 0; q <= t; q++) inf += s.newInf[q * n + i] + s.imports[q * n + i];
-    rows += `<dt>${md(t)} 實際感染</dt><dd>${fmt(inf)}（模型估計）</dd>`;
+    rows += `<dt>${md(t)} 累計確診</dt><dd>${fmt(view.s.reported[t * n + i])}（模型）</dd>`;
+    const pk = peakOf(ser.inf);
+    let tot = 0; for (let q = 0; q < T; q++) tot += ser.inf[q];
+    const rising = pk.d >= T - 3;
+    peaks = `<div class="peaks">
+      <div><div class="v">${pk.m > 0.5 ? (rising ? "尚未到" : md(pk.d)) : "—"}</div><div class="l">感染高峰日（模型）${rising ? `<br>${md(T - 1)} 仍在上升` : ""}</div></div>
+      <div><div class="v">${pk.m > 0.5 ? fmt(pk.m) : "—"}</div><div class="l">高峰每日新增感染（模型）</div></div>
+      <div><div class="v">${fmt(tot)}</div><div class="l">至 ${md(T - 1)} 總感染（模型，${(100 * tot / x.N).toFixed(tot / x.N < 0.001 ? 3 : 1)}% 人口）</div></div>
+    </div>
+    <dl class="kv"><dt>真實確診高峰</dt><dd>${opTxt}</dd></dl>`;
   } else {
     const k = t - D.obsStart, c = k >= 0 ? D.obsCum[i][k] : null;
-    rows += `<dt>${md(t)} 累計確診</dt><dd>${c === null || c === undefined ? "—" : fmt(c)}</dd>`;
+    rows += `<dt>${md(t)} 累計確診</dt><dd>${c === null || c === undefined ? "—" : fmt(c)}</dd><dt>確診高峰（7 日平均）</dt><dd>${opTxt}</dd>`;
   }
+  return { ser, peaks, rows };
+}
+function renderSel() {
+  const el = document.getElementById("sel"), i = state.sel;
+  if (i === null || i === undefined) { el.innerHTML = "點地圖上的國家或擴散點，查看它的疫情曲線、高峰、首例日與感染來源鏈。"; return; }
+  const x = D.nodes[i];
+  const chain = chainOf(i).map(nm);
+  const { ser, peaks, rows: rows0 } = selection(i);
+  let rows = rows0;
   const sh = view.share[i];
   if (view.src[i] !== null && view.src[i] !== undefined) rows += `<dt>推定來源</dt><dd>${nm(view.src[i])}${sh !== null && sh !== undefined ? `（${Math.round(sh * 100)}%）` : (view.evid && view.evid[i] === "nearest_infected" ? "（最近已感染地區）" : "")}</dd>`;
-  el.innerHTML = `<div class="sel-name">${nm(i)} <span class="mono" style="color:var(--muted);font-size:12px;font-weight:400">${x.name}</span></div>
+  const sim = view.kind === "sim";
+  el.innerHTML = `<div class="selhead"><div class="sel-name">${nm(i)} <span class="mono" style="color:var(--muted);font-size:12px;font-weight:400">${x.name}${x.reg ? "・" + REGION_ZH[x.reg] : ""}</span></div>
+      ${sim ? `<div class="seg mini" role="group" aria-label="曲線"><button data-c="rep" aria-pressed="${state.selCurve === "rep"}">每日確診</button><button data-c="seir" aria-pressed="${state.selCurve === "seir"}">SEIR</button></div>` : ""}</div>
+    <svg id="sel-chart" aria-label="${nm(i)} 的疫情曲線"></svg>
+    <div class="note" id="sel-chart-note"></div>
+    ${peaks}
     <dl class="kv">${rows}</dl>
-    <div class="chain">來源鏈：${chain.map((c, q) => q === 0 ? `<b>${c}</b>` : c).join(" ← ")}</div>`;
+    <div class="chain">來源鏈：${chain.map((c, q) => q === 0 ? `<b>${c}</b>` : c).join(" ← ")}</div>
+    <div class="btnrow"><button class="btn small" id="export-sel">⬇ 匯出 ${nm(i)} 每日資料</button></div>`;
+  el.querySelectorAll(".seg.mini button").forEach(b => b.addEventListener("click", () => { state.selCurve = b.dataset.c; renderSel(); }));
+  document.getElementById("export-sel").addEventListener("click", () => exportCountry(i, ser));
+  renderSelChart(i, ser);
+}
+function renderSelChart(i, ser) {
+  const el = document.getElementById("sel-chart"), w = el.clientWidth || 300, h = 150, m = { l: 38, r: 8, t: 8, b: 18 };
+  const c = d3.select(el).attr("viewBox", `0 0 ${w} ${h}`);
+  const t1 = dayOf("2020-01-20");
+  const x = d3.scaleLinear().domain([t1, T - 1]).range([m.l, w - m.r]);
+  const seir = view.kind === "sim" && state.selCurve === "seir";
+  const lines = seir
+    ? [[ser.E, "var(--event)", "E 潛伏"], [ser.I, "var(--infect)", "I 具傳染力"], [ser.R, "var(--muted)", "R 康復"]]
+    : [[ser.obs7, "var(--obs)", "真實確診（7 日平均）"], ...(view.kind === "sim" ? [[ser.rep7, "var(--infect)", "模型確診（7 日平均）"]] : [])];
+  let ymax = 1;
+  for (const [a] of lines) for (let t = t1; t < T; t++) if (Number.isFinite(a[t]) && a[t] > ymax) ymax = a[t];
+  const y = d3.scaleLinear().domain([0, ymax * 1.08]).nice(4).range([h - m.b, m.t]);
+  y.ticks(4).forEach(v => {
+    c.append("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y(v)).attr("y2", y(v)).attr("stroke", "var(--rule)");
+    c.append("text").attr("x", m.l - 4).attr("y", y(v) + 3).attr("text-anchor", "end").text(fmt(v));
+  });
+  d3.range(t1, T).filter(t => dstr(t).endsWith("-01")).forEach(t => c.append("text").attr("x", x(t)).attr("y", h - 4).attr("text-anchor", "middle").text(md(t)));
+  for (const [a, col] of lines) {
+    c.append("path").attr("fill", "none").attr("stroke", col).attr("stroke-width", 1.8)
+      .attr("d", d3.line().defined(d => Number.isFinite(d[1])).x(d => x(d[0])).y(d => y(d[1]))(d3.range(t1, T).map(t => [t, a[t]])));
+  }
+  c.append("line").attr("x1", x(Math.max(state.t, t1))).attr("x2", x(Math.max(state.t, t1))).attr("y1", m.t).attr("y2", h - m.b).attr("stroke", "var(--ink)").attr("stroke-opacity", 0.5);
+  document.getElementById("sel-chart-note").innerHTML = lines.map(([, col, lab]) => `<span style="color:${col}">━</span> ${lab}`).join("　") +
+    (seir ? "　（人數，模型）" : "");
 }
 
 /* ---------------- 時間軸與事件 ---------------- */
@@ -668,10 +769,13 @@ function renderChart() {
   }
   c.append("line").attr("x1", x(Math.max(state.t, t1))).attr("x2", x(Math.max(state.t, t1))).attr("y1", m.t).attr("y2", h - m.b).attr("stroke", "var(--ink)").attr("stroke-opacity", 0.5);
   document.getElementById("chart-note").innerHTML = state.mode === "sim"
-    ? `<span style="color:var(--infect)">━</span> 模型　<span style="color:var(--obs)">━</span> 真實（JHU）${base && !sameAsBase() ? `　<span style="color:var(--muted)">┅</span> 校準基準` : ""}　中國以外累計確診，對數刻度`
+    ? `<span style="color:var(--infect)">━</span> 模型　<span style="color:var(--obs)">━</span> 真實（JHU）${base && !sameAsBase() ? `　<span style="color:var(--muted)">┅</span> ${baseLabel}` : ""}　中國以外累計確診，對數刻度`
     : `<span style="color:var(--obs)">━</span> 真實（JHU）中國以外累計確診，對數刻度`;
 }
-function sameAsBase() { return JSON.stringify(P) === JSON.stringify(P0) && scen.origin === "CHN-HUB" && scen.intlCutDay === undefined; }
+// 比較基準：預設是校準值；按「設為比較基準 A」後改成當時的情境
+let baseKey = JSON.stringify([P0, { origin: "CHN-HUB", intlCutDay: undefined, intlCutKeep: 0.5 }]), baseLabel = "校準基準";
+const scenKey = () => JSON.stringify([P, { origin: scen.origin, intlCutDay: scen.intlCutDay, intlCutKeep: scen.intlCutDay === undefined ? 0.5 : scen.intlCutKeep }]);
+function sameAsBase() { return scenKey() === baseKey; }
 function reachedBy(v, t) { let c = 0; v.first.forEach((d, i) => { if (d >= 0 && d <= t && i !== v.origin) c++; }); return c; }
 function renderStats() {
   const t = state.t;
@@ -689,16 +793,75 @@ function renderStats() {
   dl("d-count", reachedBy(view, t), reachedBy(base, t), v => v);
   dl("d-rep", view.outRep[t], base.outRep[t], fmt);
   dl("d-inf", view.infCum ? view.infCum[t] : 0, base.infCum[t], fmt);
-  // 情境比較摘要
+  // 情境比較：摘要 + 逐國首例日差
   const cmp = document.getElementById("compare");
-  if (!show) { cmp.innerHTML = `<div class="note">目前是校準後的基準情境。調整任一參數後，這裡會比較情境與基準。</div>`; return; }
+  if (!show) { cmp.innerHTML = `<div class="note">目前和${baseLabel}相同。調整任一參數後，這裡會逐國比較首例日。</div>`; return; }
   const d331 = dayOf("2020-03-31"), last = T - 1;
-  const delayOf = v => { const a = []; for (let i = 0; i < n; i++) if (i !== v.origin && base.first[i] >= 0 && v.first[i] >= 0) a.push(v.first[i] - base.first[i]); return a.length ? d3.median(a) : 0; };
-  const md2 = delayOf(view);
+  const diffs = [];
+  for (let i = 0; i < n; i++) {
+    if (i === view.origin || i === base.origin) continue;
+    const a = base.first[i], b = view.first[i];
+    if (a < 0 && b < 0) continue;
+    diffs.push({ i, a, b, d: a >= 0 && b >= 0 ? b - a : null });
+  }
+  const both = diffs.filter(r => r.d !== null).map(r => r.d);
+  const md2 = both.length ? d3.median(both) : 0;
+  const gone = diffs.filter(r => r.b < 0).length, added = diffs.filter(r => r.a < 0).length;
+  const changed = diffs.filter(r => r.d === null || r.d !== 0);
+  changed.sort((p, q) => (q.d === null ? 1e9 : q.d) - (p.d === null ? 1e9 : p.d));
+  const cell = d => d < 0 ? "未出現" : md(d);
+  const dtxt = r => r.d === null ? (r.b < 0 ? `<span class="later">不再出現</span>` : `<span class="earlier">新出現</span>`)
+    : r.d === 0 ? "0" : `<span class="${r.d > 0 ? "later" : "earlier"}">${r.d > 0 ? "+" : ""}${r.d}</span>`;
   cmp.innerHTML = `
+    <div class="note">A＝${baseLabel}　B＝目前情境</div>
     <div><span>3/31 前出現病例的國家</span><span class="mono">${reachedBy(base, d331)} → ${reachedBy(view, d331)}</span></div>
-    <div><span>4/30 全球累計感染</span><span class="mono">${fmt(base.infCum[last])} → ${fmt(view.infCum[last])}</span></div>
-    <div><span>各國首例日（中位數）</span><span class="mono">${md2 === 0 ? "不變" : (md2 > 0 ? "延後 " : "提早 ") + Math.abs(md2) + " 天"}</span></div>`;
+    <div><span>${md(last)} 全球累計感染</span><span class="mono">${fmt(base.infCum[last])} → ${fmt(view.infCum[last])}</span></div>
+    <div><span>各國首例日（中位數）</span><span class="mono">${md2 === 0 ? "不變" : (md2 > 0 ? "延後 " : "提早 ") + Math.abs(md2) + " 天"}</span></div>
+    ${gone || added ? `<div><span>首例沒出現／新出現</span><span class="mono">${gone}／${added} 國</span></div>` : ""}
+    <details class="cmp-list"${state.cmpOpen ? " open" : ""}><summary>逐國首例日比較（${changed.length} 國改變）</summary>
+      <div class="cmp-scroll"><table><thead><tr><th>國家</th><th>A</th><th>B</th><th>差（天）</th></tr></thead><tbody>
+      ${changed.map(r => `<tr data-i="${r.i}"><td>${nm(r.i)}</td><td class="num">${cell(r.a)}</td><td class="num">${cell(r.b)}</td><td class="num">${dtxt(r)}</td></tr>`).join("") || `<tr><td colspan="4" class="note">沒有國家的首例日改變</td></tr>`}
+      </tbody></table></div></details>`;
+  const det = cmp.querySelector("details");
+  det.addEventListener("toggle", () => { state.cmpOpen = det.open; });
+  cmp.querySelectorAll("tr[data-i]").forEach(tr => tr.addEventListener("click", () => select(+tr.dataset.i)));
+}
+
+/* ---------------- 匯出 CSV ---------------- */
+function download(name, rows) {
+  const esc = v => { const s = v === null || v === undefined ? "" : String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  const csv = "﻿" + rows.map(r => r.map(esc).join(",")).join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+function exportAll() {
+  const sim = view.kind === "sim", last = T - 1;
+  const head = ["iso3", "國家", "地區", sim ? "模型首例日" : "首例日", "真實首例日", "推定來源"];
+  if (sim) head.push(`比較基準首例日`, "首例日差（天）", `${dstr(last)} 模型累計確診`, `${dstr(last)} 真實累計確診`, "模型總感染", "模型感染高峰日", "模型高峰每日新增感染");
+  const rows = [head];
+  for (let i = 0; i < n; i++) {
+    const x = D.nodes[i], f = view.first[i];
+    const r = [x.iso3, nm(i), REGION_ZH[x.reg] || "", f >= 0 ? dstr(f) : "", x.obsFirst !== null ? dstr(x.obsFirst) : "",
+      view.src[i] !== null && view.src[i] !== undefined ? nm(view.src[i]) : ""];
+    if (sim) {
+      const b = base.first[i], ser = seriesOf(i), pk = peakOf(ser.inf);
+      let tot = 0; for (let q = 0; q < T; q++) tot += ser.inf[q];
+      const oc = D.obsCum[i][last - D.obsStart];
+      r.push(b >= 0 ? dstr(b) : "", b >= 0 && f >= 0 ? f - b : "", Math.round(view.s.reported[last * n + i]), oc ?? "",
+        Math.round(tot), pk.m > 0.5 ? dstr(pk.d) : "", pk.m > 0.5 ? Math.round(pk.m) : "");
+    }
+    rows.push(r);
+  }
+  download(`covid19_${sim ? "模擬" : "真實"}_各國結果.csv`, rows);
+}
+function exportCountry(i, ser) {
+  const sim = view.kind === "sim";
+  const rows = [["日期", "真實每日確診（7 日平均）", ...(sim ? ["模型每日確診（7 日平均）", "模型每日新增感染", "E 潛伏", "I 具傳染力", "R 康復"] : [])]];
+  const r1 = v => Number.isFinite(v) ? Math.round(v * 10) / 10 : "";
+  for (let t = 0; t < T; t++) rows.push([dstr(t), r1(ser.obs7[t]), ...(sim ? [r1(ser.rep7[t]), r1(ser.inf[t]), r1(ser.E[t]), r1(ser.I[t]), r1(ser.R[t])] : [])]);
+  download(`covid19_${D.nodes[i].iso3}_每日.csv`, rows);
 }
 
 /* ---------------- 共用 ---------------- */
@@ -743,13 +906,14 @@ function togglePlay() {
 }
 
 initControls(); initChips();
-base = runSim(P0, { origin: "CHN-HUB" });
+calib = base = runSim(P0, { origin: "CHN-HUB" });
 sim = base; view = sim;
 layout();
 renderAll();
 document.getElementById("m-sim").addEventListener("click", () => setMode("sim"));
 document.getElementById("m-real").addEventListener("click", () => setMode("real"));
 document.getElementById("play").addEventListener("click", togglePlay);
+document.getElementById("export-csv").addEventListener("click", exportAll);
 let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { if (!document.getElementById("tab-global").hidden) { layout(); renderAll(); } }, 150); });
 window.__showGlobal = () => { layout(); renderAll(); };
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => renderFrame());

@@ -25,16 +25,23 @@ import numpy as np
 import pandas as pd
 import yaml
 
+import regions
+
 ROOT = Path(__file__).resolve().parents[1]
 PROC = ROOT / "data" / "processed"
 RAW = ROOT / "data" / "raw"
 OUT = ROOT / "data" / "model_output"
 PARAMS = Path(__file__).with_name("params.yaml")
+COUNTRY = Path(__file__).with_name("country_contact.csv")   # 各國傳播倍數（model/fit_countries.py 產生）
 
 
-def load_params(path: Path = PARAMS) -> dict:
+def load_params(path: Path = PARAMS, country: Path | None = COUNTRY) -> dict:
     with open(path, encoding="utf-8") as f:
-        return yaml.safe_load(f)
+        p = yaml.safe_load(f)
+    if country is not None and country.exists():
+        cc = pd.read_csv(country)
+        p["country_contact"] = {r.iso3: round(float(r.contact), 4) for r in cc.itertuples()}
+    return p
 
 
 # ------------------------------------------------------------------ 輸入資料
@@ -47,6 +54,7 @@ class Inputs:
     stringency: np.ndarray      # 嚴格指數 0–100 (T, n)
     c8: np.ndarray              # 入境管制等級 0–4 (T, n)
     obs_first: pd.Series = field(default_factory=pd.Series)  # 觀察到的首例日
+    region: list = field(default_factory=list)                # 各節點所屬地區（model/regions.py）
 
     def idx(self, iso3: str) -> int:
         return self.nodes.index(iso3)
@@ -54,7 +62,8 @@ class Inputs:
     def subset(self, keep: list) -> "Inputs":
         ix = [self.idx(k) for k in keep]
         return Inputs(list(keep), self.N[ix], self.routes[np.ix_(ix, ix)], self.dates,
-                      self.stringency[:, ix], self.c8[:, ix], self.obs_first.reindex(keep))
+                      self.stringency[:, ix], self.c8[:, ix], self.obs_first.reindex(keep),
+                      [self.region[i] for i in ix] if self.region else [])
 
 
 def load_inputs(p: dict) -> Inputs:
@@ -83,8 +92,24 @@ def load_inputs(p: dict) -> Inputs:
     si = si.reindex(index=dates, columns=nodes).ffill().fillna(0).to_numpy()
     c8 = c8.reindex(index=dates, columns=nodes).ffill().fillna(0).to_numpy()
 
-    fc = pd.read_csv(PROC / "first_cases.csv", parse_dates=["first_case"]).set_index("iso3")["first_case"]
-    return Inputs(nodes, N, routes, dates, si, c8, fc.reindex(nodes))
+    fc = pd.read_csv(PROC / "first_cases.csv", parse_dates=["first_case"]).set_index("iso3")
+    cont = fc["continent"].reindex(nodes)
+    region = [regions.region_of(k, None if pd.isna(c) else c) for k, c in zip(nodes, cont)]
+    return Inputs(nodes, N, routes, dates, si, c8, fc["first_case"].reindex(nodes), region)
+
+
+def region_values(p: dict, inp: Inputs, key: str, default: float) -> np.ndarray:
+    """各節點的地區參數（params.yaml 的 regions.<地區>.<key>）；起點（湖北）固定用 default。"""
+    reg = p.get("regions") or {}
+    v = np.array([float(reg.get(r, {}).get(key, default)) for r in inp.region] if inp.region
+                 else [default] * len(inp.nodes))
+    if key == "contact" and p.get("country_contact"):
+        cc = p["country_contact"]
+        v = v * np.array([cc.get(k, 1.0) for k in inp.nodes])
+    o = p["origin"]["node"]
+    if o in inp.nodes:
+        v[inp.idx(o)] = default
+    return v
 
 
 def build_travel(p: dict, inp: Inputs) -> np.ndarray:
@@ -132,8 +157,8 @@ def simulate(p: dict, inp: Inputs, stochastic: bool = False, seed: int | None = 
     rng = np.random.default_rng(seed)
     ep, tr, rp, lk = p["epidemiology"], p["travel"], p["reporting"], p["lockdown"]
     sigma, gamma = 1 / ep["latent_days"], 1 / ep["infectious_days"]
-    beta0 = ep["R0"] * gamma
     T, n = len(inp.dates), len(inp.nodes)
+    beta0 = ep["R0"] * gamma * region_values(p, inp, "contact", 1.0)   # 各地區傳播倍數
     N = inp.N.copy()
     dt = 1 / p["simulation"]["steps_per_day"]
 
@@ -231,7 +256,12 @@ def reporting_ratio(p: dict, inp: Inputs) -> np.ndarray:
     """每天、每個節點的通報率 ρ (T, n)。湖北從 early 線性升到 late。"""
     rp = p["reporting"]
     T, n = len(inp.dates), len(inp.nodes)
-    ratio = np.full((T, n), rp["ratio_default"], dtype=float)
+    ratio = np.tile(region_values(p, inp, "ratio", rp["ratio_default"]), (T, 1))   # 各地區通報率
+    if rp.get("ratio_early") is not None:
+        # 疫情初期（病例少、密集疫調）的通報率，與各地區後期的通報率之間線性過渡
+        a, b = pd.Timestamp(rp["early_ramp_start"]), pd.Timestamp(rp["early_ramp_end"])
+        w = np.clip(np.asarray((inp.dates - a).days) / max((b - a).days, 1), 0, 1)[:, None]
+        ratio = rp["ratio_early"] * (1 - w) + ratio * w
     o = p["origin"]["node"]
     if o in inp.nodes:
         a, b = pd.Timestamp(rp["hubei_ramp_start"]), pd.Timestamp(rp["hubei_ramp_end"])

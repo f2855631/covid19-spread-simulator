@@ -28,7 +28,7 @@ SENS = [  # (名稱, 參數路徑, 調低值的倍數或函數, 調高)
     ("每航線旅客數", "travel.passengers_per_route_per_day", 0.5, 2.0),
     ("經中國轉機比例", "travel.hubei_transit_fraction", 0.5, 2.0),
     ("入境旅客驗出率", "reporting.import_ratio", 0.5, 2.0),
-    ("一般通報率", "reporting.ratio_default", 0.5, 2.0),
+    ("初期通報率", "reporting.ratio_early", 0.5, 2.0),
     ("封城減少移動", "lockdown.wuhan_travel_reduction", 0.85 / 0.95, 0.99 / 0.95),
     ("湖北起始感染數", "origin.seed_infected", 1, 5),
     ("感染到確診延遲", "reporting.delay_days", 6 / 8, 10 / 8),
@@ -157,9 +157,26 @@ def main():
     print(sdf[["param", "side", "value", "median_shift_days", "top30_mae", "reached_by_0331"]].to_string(index=False))
 
     # ---------------------------------------------------------- 曲線
-    obj = calibrate.Objective(p, inp)
-    m = obj.metrics(p)
-    summary["curves"] = {k: m[k] for k in ["curve_rmse_log10", "curve_mape", "daily_rmse_log10"]}
+    # 確診曲線（直接用參數檔的值，不重新擬合通報率）：中國以外總和、各地區、各國 4/30
+    cases = pd.read_csv(seir.PROC / "cases_daily.csv", usecols=["date", "iso3", "cum_confirmed"], parse_dates=["date"])
+    oc = cases.pivot(index="date", columns="iso3", values="cum_confirmed").reindex(index=inp.dates, columns=inp.nodes).fillna(0).to_numpy()
+    t430 = inp.dates.get_loc(pd.Timestamp(calibrate.CURVE_END))
+    out_mask = ~np.isin(nodes, EXCL)
+    wm, wo = base.reported_cum[:, out_mask].sum(axis=1), oc[:, out_mask].sum(axis=1)
+    cm = (wo >= 10) & (np.arange(len(wo)) <= t430)
+    reg = np.array(inp.region)
+    regs = {r: round(float(base.reported_cum[t430, out_mask & (reg == r)].sum() / max(oc[t430, out_mask & (reg == r)].sum(), 1)), 2)
+            for r in calibrate.REGIONS}
+    ok = out_mask & (oc[t430] >= 10)
+    ratio_c = (base.reported_cum[t430, ok] + 1) / (oc[t430, ok] + 1)
+    summary["curves"] = {
+        "outside_china_mape": round(float(np.mean(np.abs(wm[cm] - wo[cm]) / wo[cm])), 3),
+        "outside_china_ratio_0430": round(float(wm[t430] / wo[t430]), 2),
+        "region_ratio_0430": regs,
+        "countries_with_10plus_cases": int(ok.sum()),
+        "countries_within_2x_0430": round(float(np.mean((ratio_c >= 0.5) & (ratio_c <= 2))), 3),
+    }
+    print("確診曲線：", summary["curves"])
     (OUT / "validation_summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
     print("完成：data/model_output/validation_*.csv、validation_summary.json")
 

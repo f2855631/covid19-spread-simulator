@@ -1,0 +1,39 @@
+{
+  "end": "2020-06-30",
+  "outside_china_total_ratio_0430": 1.17,
+  "continent_share_0430": {
+    "Africa": {
+      "model_share": 0.01,
+      "obs_share": 0.012
+    },
+    "Asia": {
+      "model_share": 0.183,
+      "obs_share": 0.137
+    },
+    "Europe": {
+      "model_share": 0.428,
+      "obs_share": 0.424
+    },
+    "North America": {
+      "model_share": 0.328,
+      "obs_share": 0.368
+    },
+    "Oceania": {
+      "model_share": 0.003,
+      "obs_share": 0.003
+    },
+    "South America": {
+      "model_share": 0.048,
+      "obs_share": 0.056
+    }
+  },
+  "geo_mean_ratio_2020-04": 1.0,
+  "within_2x_2020-04": 6,
+  "geo_mean_ratio_2020-05": 2.81,
+  "within_2x_2020-05": 1,
+  "geo_mean_ratio_2020-06": 6.37,
+  "within_2x_2020-06": 0,
+  "n_countries": 8,
+  "median_abs_peak_diff_days": 63.5,
+  "still_rising_at_end": 5
+}
