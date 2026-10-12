@@ -202,6 +202,7 @@ details.cmp-list summary { cursor: pointer; font-size: 12.5px; color: var(--mute
         <button class="btn primary" id="play" aria-label="播放">▶ 播放</button>
         <div class="chips" id="chips" role="group" aria-label="時機點類型"></div>
         <button class="btn small" id="export-csv" title="下載目前情境的各國結果（CSV）">⬇ 匯出 CSV</button>
+        <span class="note" id="export-note" hidden></span>
         <label class="topn" for="topn">顯示前 <output id="topn-v" class="mono">20</output> 個
           <input type="range" id="topn" min="5" max="60" step="1" value="20"></label>
       </div>
@@ -830,11 +831,25 @@ function renderStats() {
 /* ---------------- 匯出 CSV ---------------- */
 function download(name, rows) {
   const esc = v => { const s = v === null || v === undefined ? "" : String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
-  const csv = "﻿" + rows.map(r => r.map(esc).join(",")).join("\n");
+  const csv = "\ufeff" + rows.map(r => r.map(esc).join(",")).join("\n");
+  // 在 claude.ai 上透過 downloads 能力存檔（會先請檢視者確認）；其他地方（GitHub Pages、本機）直接下載
+  if (window.claude && typeof window.claude.use === "function") {
+    window.claude.use("downloads").then(dl => {
+      if (!dl) { alertNote("這個檢視環境不能下載檔案，請改用 GitHub Pages 版或本機開啟。"); return; }
+      dl.save({ filename: name, data: new Blob([csv]) }).catch(e => {
+        if (e && e.code !== "declined") alertNote("下載失敗：" + (e.message || e.code));
+      });
+    });
+    return;
+  }
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
   a.download = name; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+function alertNote(msg) {
+  const el = document.getElementById("export-note");
+  el.textContent = msg; el.hidden = false; setTimeout(() => { el.hidden = true; }, 6000);
 }
 function exportAll() {
   const sim = view.kind === "sim", last = T - 1;
